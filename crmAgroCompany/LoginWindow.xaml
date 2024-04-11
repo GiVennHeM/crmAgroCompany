@@ -20,7 +20,8 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="D:\Завантаження з Chrome\logo from agro  4a15f297-2ca3-4a6d-b087-4cfecca9acd1.png" Stretch="UniformToFill" TileMode="None"/>
+        <ImageBrush ImageSource="/Resources/Images/LoginWindowsBackground.png"
+            Stretch="UniformToFill" TileMode="None"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
@@ -115,7 +116,7 @@ ToolTip="MaterialDesignFlatLightButton" Foreground="Black" Margin="0 0 0 0" Heig
  >
 
                         <Button Background="{x:Null}" Width="122" Height="118" BorderBrush="{x:Null}" Click="Button_Click_1">
-                            <Image x:Name="ProfileImageSource" Source="D:\Завантаження з Chrome\profile.png" Height="90" Width="96" />
+                            <Image x:Name="ProfileImageSource" Source="\Resources\Images\DefaultUserAvatar.png" Height="90" Width="96" />
                         </Button>
                     </materialDesign:Badged>
                     <TextBox x:Name="signupNameTextBox"

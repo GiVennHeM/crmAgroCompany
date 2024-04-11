@@ -20,7 +20,7 @@
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}">
     <Window.Background>
-        <ImageBrush ImageSource="D:\Завантаження з Chrome\logo from agro  5f1018dc-8c16-4eaa-a773-c288e1631509.png"/>
+        <ImageBrush ImageSource="/Resources/Images/MainWindowBackGround.png" />
     </Window.Background>
 
     <Grid>
@@ -68,7 +68,7 @@
  Style="{StaticResource MaterialDesignRaisedDarkButton}"
              IsEnabled="True"
  ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
-Grid.Column="2" Margin="41,20,348,0" BorderBrush="{x:Null}" VerticalAlignment="Top" Click="addClientButton_Click">
+Grid.Column="2" Margin="41,20,321,0" BorderBrush="{x:Null}" VerticalAlignment="Top" Click="addClientButton_Click">
             <Button.Background>
                 <SolidColorBrush Color="#FFFFF4F4" Opacity="0.7"/>
             </Button.Background>
@@ -92,7 +92,7 @@ Grid.Column="2" Margin="349,20,82,0" BorderBrush="{x:Null}" Height="40" Vertical
  Style="{StaticResource MaterialDesignRaisedDarkButton}"
              IsEnabled="True"
  ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
-Grid.Column="3" Margin="37,20,2,0" BorderBrush="{x:Null}" Height="40" VerticalAlignment="Top">
+Grid.Column="3" Margin="19,20,20,0" BorderBrush="{x:Null}" Height="40" VerticalAlignment="Top">
             <Button.Background>
                 <SolidColorBrush Color="#FFFFF4F4" Opacity="0.7"/>
             </Button.Background>
