@@ -9,12 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="LoginWindowsBackground.png" />
+    <None Remove="MainWindowBackGround.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Resources\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="LoginWindowsBackground.png" />
+    <Resource Include="MainWindowBackGround.png" />
   </ItemGroup>
 
 </Project>
