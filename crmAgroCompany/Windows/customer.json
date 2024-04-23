@@ -1,0 +1,10 @@
+{
+  "Id": 0,
+  "Name": "John Doe",
+  "Company": "ABC Company",
+  "Region": "Region1",
+  "NumberOfPhone": "1234567890",
+  "Email": "john.doe@example.com",
+  "DealsId": [],
+  "Lead": 1
+}

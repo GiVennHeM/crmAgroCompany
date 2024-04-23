@@ -20,7 +20,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="/LoginWindowsBackground.png"
+        <ImageBrush ImageSource="LoginWindowsBackground.png"
             Stretch="UniformToFill" TileMode="None"/>
     </Window.Background>
     <Grid>

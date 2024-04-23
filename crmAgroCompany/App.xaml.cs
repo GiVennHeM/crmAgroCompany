@@ -1,7 +1,4 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
-
+﻿
 namespace crmAgroCompany
 {
     /// <summary>
@@ -9,9 +6,11 @@ namespace crmAgroCompany
     /// </summary>
     public partial class App : Application
     {
-       public App()
+       private void Application_Startup(object sender, StartupEventArgs e)
         {
-            InitializeComponent();
+          
+            MainWindow newCustomer= new MainWindow();
+            newCustomer.Show();
         }
     }
 
