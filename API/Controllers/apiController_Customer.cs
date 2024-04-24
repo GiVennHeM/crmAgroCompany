@@ -35,11 +35,20 @@ namespace API.Controllers
         {
             if (customer == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid customer data.");
             }
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(GetCustomer), new { id = customer.Id }, customer);
+
+            try
+            {
+                _context.Customers.Add(customer);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(GetCustomer), new { id = customer.Id }, customer);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to create customer.");
+            }
         }
+
     }
 }

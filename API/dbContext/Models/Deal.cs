@@ -14,10 +14,8 @@
         [MaxLength(100)]
         public string Region { get; set; }
         [Required]
-        [MaxLength(100)]
         public double Cash { get; set; }
         [Required]
-        [MaxLength(1)]
         public int Lead { get; set; }
         [Required]
         [MaxLength(100)]

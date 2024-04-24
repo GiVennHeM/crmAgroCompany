@@ -1,18 +1,4 @@
-﻿using crmAgroCompany;
-using MaterialDesignThemes.Wpf;
-using System.Net.Http;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace crmAgroCompany;
+﻿namespace crmAgroCompany;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -55,7 +41,6 @@ public partial class MainWindow : Window
                     // Check if the response is successful
                     if (response.IsSuccessStatusCode)
                     {
-                        // Read response content as JSON string
 
                     // Deserialize JSON string to list of Customer objects
                     var json = await response.Content.ReadAsStringAsync();
@@ -66,10 +51,8 @@ public partial class MainWindow : Window
                     customersDataGrid.ItemsSource = customers;
                     var columndealsid = customersDataGrid.Columns.FirstOrDefault(c => c.Header.ToString() == "DealsId");
                     var columnlead = customersDataGrid.Columns.FirstOrDefault(c => c.Header.ToString() == "Lead");
-                    // Перевіряємо, чи стовбець знайдено
                     if (columndealsid != null && columnlead !=null)
                     {
-                        // Приховуємо стовбець
                         columndealsid.Visibility = Visibility.Collapsed;
                         columnlead.Visibility = Visibility.Collapsed;
                     }
@@ -155,7 +138,7 @@ public partial class MainWindow : Window
             using (var client = new HttpClient())
             {
                 // Відправка PUT-запиту до API для оновлення клієнта
-                var response = await client.PutAsync($"http://localhost:5169/api/Customer/{selectedCustomer.Id}", content);
+                var response = await client.PutAsync($"https://localhost:7016/api/Customer/{selectedCustomer.Id}", content);
 
                 if (response.IsSuccessStatusCode)
                 {

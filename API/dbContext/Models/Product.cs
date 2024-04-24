@@ -11,10 +11,8 @@
         [MaxLength(100)]
         public string Type { get; set; }
         [Required]
-        [MaxLength(100)]
         public double Price { get; set; }
         [Required]
-        [MaxLength(100)]
         public double TotalAmount { get; set; }
         [Required]
         [MaxLength(100)]

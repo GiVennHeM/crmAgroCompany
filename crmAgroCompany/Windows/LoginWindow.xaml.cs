@@ -1,5 +1,4 @@
 ﻿using crmAgroCompany.Classes;
-
 namespace crmAgroCompany
 {
     /// <summary>

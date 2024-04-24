@@ -3,6 +3,7 @@ using API.dbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(SampleDBContext))]
-    partial class SampleDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240423113402_NewMigration")]
+    partial class NewMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,9 +74,11 @@ namespace API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Cash")
+                        .HasMaxLength(100)
                         .HasColumnType("float");
 
                     b.Property<int>("Lead")
+                        .HasMaxLength(1)
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -153,9 +158,11 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<double>("Price")
+                        .HasMaxLength(100)
                         .HasColumnType("float");
 
                     b.Property<double>("TotalAmount")
+                        .HasMaxLength(100)
                         .HasColumnType("float");
 
                     b.Property<string>("Type")

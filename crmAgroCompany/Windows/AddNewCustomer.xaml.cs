@@ -4,31 +4,54 @@ namespace crmAgroCompany
 {
     public partial class AddNewCustomer : Window
     {
-        private readonly RestClient _client;
 
         public AddNewCustomer()
         {
             InitializeComponent();
         }
-
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-
-                dynamic customer = new
+                Customer newCustomer = new Customer
                 {
-                    Name = addUserName.Text,
-                    Company = addUserCompany.Text,
-                    Region = comboboxRegion.Text,
-                    NumberOfPhone = AAddUserNumberofphoneTextBox.Text,
-                    Email = addUserEmail.Text,
-                    
+                    Name = "John Doe",
+                    Company = "ABC Company",
+                    Region = "Region1",
+                    NumberOfPhone = "1234567890",
+                    Email = "john.doe@example.com",
                     Lead = 0
                 };
 
+                // Create a new deal object
+                Deal newDeal = new Deal
+                {
+                    Name = "Deal1",
+                    Status = "New",
+                    Region = "Region2",
+                    Cash = 100.0,
+                    Lead = 0
+                };
+                Product newProduct = new Product
+                {
+                    Name = "Stick",
+                    Type = "Helped",
+                    Price = 50.0,
+                    TotalAmount = 50.0
+                };
+
+                // Add the new customer to the deal and vice versa
+                newDeal.CostumerId = new List<Customer> { newCustomer };
+                newCustomer.DealsId = new List<Deal> { newDeal };
+                newDeal.ProductsId = new List<Product> { newProduct };
+
+                // Serialize customer object to JSON with settings to ignore circular references
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
                 // Serialize customer object to JSON
-                var json = JsonConvert.SerializeObject(customer);
+                var json = JsonConvert.SerializeObject(newCustomer, jsonSettings);
 
                 // Create StringContent with JSON data
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -36,7 +59,7 @@ namespace crmAgroCompany
                 // Send HTTP POST request to API endpoint
                 using (var client = new HttpClient())
                 {
-                    var response = await client.PostAsync("http://localhost:5169/api/Customer", content);
+                    var response = await client.PostAsync("https://localhost:7016/api/Customer", content);
 
                     if (response.IsSuccessStatusCode)
                     {

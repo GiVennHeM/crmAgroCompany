@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <Configurations>Debug;Release;All</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +32,7 @@
     <None Remove="LoginWindowsBackground.png" />
     <None Remove="MainWindowBackGround.png" />
     <None Remove="Windows\customer.json" />
+    <None Remove="Windows\MainWindowBackGround.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Windows\customer.json">
@@ -43,7 +45,6 @@
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Windows\LoginWindowsBackground.png" />
     <Resource Include="Windows\MainWindowBackGround.png" />
   </ItemGroup>
 

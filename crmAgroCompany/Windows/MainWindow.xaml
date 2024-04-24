@@ -20,7 +20,7 @@
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}">
     <Window.Background>
-        <ImageBrush ImageSource="MainWindowBackGround.png"   Stretch="UniformToFill" TileMode="FlipX"/>
+        <ImageBrush ImageSource="/Windows/MainWindowBackGround.png"   Stretch="UniformToFill" TileMode="FlipX"/>
     </Window.Background>
 
     <Grid>

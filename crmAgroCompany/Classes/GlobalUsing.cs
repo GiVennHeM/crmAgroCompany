@@ -20,3 +20,5 @@ global using Newtonsoft.Json;
 global using Microsoft.EntityFrameworkCore;
 global using System.ComponentModel.DataAnnotations;
 global using System.Net.Http;
+global using crmAgroCompany.Classes;
+global using crmAgroCompany.Windows;
