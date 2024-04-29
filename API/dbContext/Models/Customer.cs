@@ -1,9 +1,9 @@
-﻿namespace API.dbContext.Models
+﻿namespace api.dbContext.Models
 {
     public class Customer
     {
         [Key]
-        public int Id { get; set; }
+        public int CustomerId { get; set; }
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }

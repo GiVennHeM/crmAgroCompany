@@ -28,71 +28,89 @@ namespace crmAgroCompany
                 SignupObjectsGrid.Visibility = Visibility.Visible;
             }
 
-            private void Button_Click(object sender, RoutedEventArgs e)
+            private async void Button_Click(object sender, RoutedEventArgs e)
             {
-                //var profileimagesource = Convert.ToString(ProfileImageSource.Source);
-                //var name = signupNameTextBox.Text;
-                //var surname = signupSurnameTextBox.Text;
-                //var numberofphone = signupNumberofphoneTextBox.Text;
-                //var position = signupPositionComboBox.SelectedIndex;
-                //var login = signupLoginTextBox.Text;
-                //var password = "";
-                //if (signupPasswordBox.Password == PasswordBoxSignupCheker.Password)
-                //{
-                //    password = signupPasswordBox.Password;
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Passwords do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    return;
-                //}
-
-                //if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) ||
-                //    string.IsNullOrEmpty(numberofphone) || position == -1 ||
-                //    string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-                //{
-                //    MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    return;
-                //}
-
-                //// Validate phone number
-                //if (!IsPhoneNumberValid(numberofphone))
-                //{
-                //    MessageBox.Show("Invalid phone number format. Please enter numbers only.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    return;
-                //}
-
-                //// Validate password complexity
-                //if (!IsPasswordValid(password))
-                //{
-                //    MessageBox.Show("Password must be at least 8 characters long and contain numbers and symbols.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    return;
-                //}
-
-                //try
-                //{
-                //    dbContext db = new dbContext();
-                //    string hashedPassword = HashHelper.ComputeHash(password);
-                //    bool success = db.SignUp(name, surname, numberofphone, position, login, hashedPassword, profileimagesource);
-
-                //    if (success)
-                //    {
-                //        MessageBox.Show("User was successfully added.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                //        ResetFields();
-                //    }
-                //    else
-                //    {
-                //        MessageBox.Show("Error adding user.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show($"Error executing request: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}
+            var profileimagesource = Convert.ToString(ProfileImageSource.Source);
+            var login = signupLoginTextBox.Text;
+            var name = signupNameTextBox.Text;
+            var surname = signupSurnameTextBox.Text;
+            var numberofphone = signupNumberofphoneTextBox.Text;
+            var password = "";
+            if (signupPasswordBox.Password == PasswordBoxSignupCheker.Password)
+            {
+                password = signupPasswordBox.Password;
             }
+            else
+            {
+                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) ||
+                string.IsNullOrEmpty(numberofphone) ||
+                string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!IsPhoneNumberValid(numberofphone))
+            {
+                MessageBox.Show("Invalid phone number format. Please enter numbers only.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!IsPasswordValid(password))
+            {
+                MessageBox.Show("Password must be at least 8 characters long and contain numbers and symbols.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            
+            try
+            {
+                LoggerUser loggerUser = new LoggerUser()
+                {
+                    ProfilePicture = profileimagesource,
+                    UserName = name,
+                    Surname = surname,
+                    PhoneNumber = numberofphone,
+                    Login = login,
+                    Password = password
+                };
+
+                var jsonSettings = new JsonSerializerSettings();
+                var json = JsonConvert.SerializeObject(loggerUser, jsonSettings);
+
+                // Create StringContent with JSON data
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                // Send HTTP POST request to API endpoint
+                using (var client = new HttpClient())
+                {
+                    var response = await client.PostAsync("https://localhost:7280/api/Customer/loggerUsers", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("User was successfully added.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ResetFields();
+                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error adding user.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error executing request: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
             private bool IsPhoneNumberValid(string phoneNumber)
             {
+
                 return phoneNumber.All(char.IsDigit);
             }
 
@@ -109,14 +127,7 @@ namespace crmAgroCompany
                 {
                     return false;
                 }
-
-                // Check if password contains at least one symbol
-                if (!password.Any(char.IsSymbol))
-                {
-                    return false;
-                }
-
-                return true;
+                return true;                    
             }
 
 
@@ -145,11 +156,9 @@ namespace crmAgroCompany
             }
             private void ResetFields()
             {
-                ProfileImageSource.Source = new BitmapImage(new Uri(@"D:\Завантаження з Chrome\profile.png"));
                 signupNameTextBox.Text = "";
                 signupSurnameTextBox.Text = "";
                 signupNumberofphoneTextBox.Text = "";
-                signupPositionComboBox.Text="";
                 signupLoginTextBox.Text = "";
                 signupPasswordBox.Password = "";
                 loginGridTextbox.Text = "";
@@ -158,36 +167,45 @@ namespace crmAgroCompany
                 LoginObjectsGrid.Visibility = Visibility.Collapsed;
                 SignupObjectsGrid.Visibility = Visibility.Collapsed;
             }
-            private void Button_Click_2(object sender, RoutedEventArgs e)
+            private async void Button_Click_2(object sender, RoutedEventArgs e)
             {
-                //var login = loginGridTextbox.Text; 
-                //var password = passwordGridTextbox.Password;
+                var login = loginGridTextbox.Text; 
+                var password = passwordGridTextbox.Password;
 
-                //try
-                //{
-                //    dbContext db = new dbContext();
-                //    bool isAuthenticated = db.Login(login, password);
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.GetAsync("http://localhost:7280/api/Customer/loggerUser");
 
-                //    if (isAuthenticated)
-                //    {
-                //        MessageBox.Show("Login successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                //        loginGridTextbox.Text = "";
-                //        passwordGridTextbox.Password = "";
-                //        ResetFields();
-                //        Hide();
-                //        MainWindow mainWindow = new MainWindow();
-                //        mainWindow.Show();
-                //    }
-                //    else
-                //    {
-                //        MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show($"Error logging in: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = await response.Content.ReadAsStringAsync();
+                        var loggers = JsonConvert.DeserializeObject<List<Customer>>(json);
+
+                        foreach(var c in loggers)
+                        {
+                            
+                        }
+                        MessageBox.Show("Login successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        loginGridTextbox.Text = "";
+                        passwordGridTextbox.Password = "";
+                        ResetFields();
+                        Hide();
+                        MainWindow mainWindow = new MainWindow();
+                        mainWindow.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error logging in: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         }
     }
     

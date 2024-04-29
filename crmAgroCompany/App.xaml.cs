@@ -9,7 +9,7 @@ namespace crmAgroCompany
        private void Application_Startup(object sender, StartupEventArgs e)
         {
           
-            MainWindow newCustomer= new MainWindow();
+            LoginWindow newCustomer= new LoginWindow();
             newCustomer.Show();
         }
     }

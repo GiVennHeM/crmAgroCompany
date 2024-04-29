@@ -21,7 +21,6 @@
         [Required]
         [MaxLength(50)]
         public string Email { get; set; }
-        public ICollection<Deal> DealsId { get; set; }
         public int Lead { get; set; }
     }
 }

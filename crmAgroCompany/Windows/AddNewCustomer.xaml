@@ -52,7 +52,7 @@ materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="
                 <ComboBoxItem Content="Запорізька" />
                 <ComboBoxItem Content="Івано-Франківська" />
                 <ComboBoxItem Content="Київська" />
-                <ComboBoxItem Content="Кіровоградська" />
+                <ComboBoxItem Content="Кіровоградська" /> 
                 <ComboBoxItem Content="Луганська" />
                 <ComboBoxItem Content="Львівська" />
                 <ComboBoxItem Content="Миколаївська" />
@@ -109,7 +109,7 @@ materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="
     materialDesign:ButtonAssist.CornerRadius="25 25 0 0"
     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
     Style="{StaticResource MaterialDesignRaisedSecondaryButton}"
-    ToolTip="MaterialDesignRaisedSecondaryButton with Round Top Corners" Margin=" 0 0 0 0" Click="Button_Click"
+    ToolTip="MaterialDesignRaisedSecondaryButton with Round Top Corners" Margin=" 0 0 0 0" 
    >
                     <TextBlock
       Text="Save" FontSize="37"/>

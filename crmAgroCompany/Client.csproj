@@ -32,6 +32,8 @@
     <None Remove="LoginWindowsBackground.png" />
     <None Remove="MainWindowBackGround.png" />
     <None Remove="Windows\customer.json" />
+    <None Remove="Windows\DefaultUserAvatar.png" />
+    <None Remove="Windows\LoginWindowsBackground.png" />
     <None Remove="Windows\MainWindowBackGround.png" />
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +47,8 @@
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Windows\DefaultUserAvatar.png" />
+    <Resource Include="Windows\LoginWindowsBackground.png" />
     <Resource Include="Windows\MainWindowBackGround.png" />
   </ItemGroup>
 

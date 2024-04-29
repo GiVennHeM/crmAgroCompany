@@ -22,11 +22,5 @@
         [Required]
         [MaxLength(1)]
         public int Lead { get; set; }
-        [Required]
-        [MaxLength(100)]
-        public ICollection<Customer> CostumerId { get; set; }
-        [Required]
-        [MaxLength(100)]
-        public ICollection<Product> ProductsId { get; set; }
     }
 }

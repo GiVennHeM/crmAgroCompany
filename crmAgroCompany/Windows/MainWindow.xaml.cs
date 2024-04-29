@@ -49,11 +49,9 @@ public partial class MainWindow : Window
                     
                     // Bind customers to the customersDataGrid
                     customersDataGrid.ItemsSource = customers;
-                    var columndealsid = customersDataGrid.Columns.FirstOrDefault(c => c.Header.ToString() == "DealsId");
                     var columnlead = customersDataGrid.Columns.FirstOrDefault(c => c.Header.ToString() == "Lead");
-                    if (columndealsid != null && columnlead !=null)
+                    if ( columnlead !=null)
                     {
-                        columndealsid.Visibility = Visibility.Collapsed;
                         columnlead.Visibility = Visibility.Collapsed;
                     }
                 }
@@ -137,7 +135,6 @@ public partial class MainWindow : Window
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             using (var client = new HttpClient())
             {
-                // Відправка PUT-запиту до API для оновлення клієнта
                 var response = await client.PutAsync($"https://localhost:7016/api/Customer/{selectedCustomer.Id}", content);
 
                 if (response.IsSuccessStatusCode)

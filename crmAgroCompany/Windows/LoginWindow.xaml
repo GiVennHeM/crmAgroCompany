@@ -20,7 +20,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="LoginWindowsBackground.png"
+        <ImageBrush ImageSource="/Windows/LoginWindowsBackground.png"
             Stretch="UniformToFill" TileMode="None"/>
     </Window.Background>
     <Grid>
@@ -93,7 +93,7 @@ materialDesign:TextFieldAssist.HasClearButton="True" Margin="0 120 0 0" Width="2
             </Border>
 
         </Grid>
-        <Grid x:Name="SignupObjectsGrid" Visibility="Visible">
+        <Grid x:Name="SignupObjectsGrid" Visibility="Collapsed">
             <Border Width="300" Height="600" CornerRadius="10">
                 <Border.BorderBrush>
                     <SolidColorBrush Color="Black" Opacity="0.7"/>
@@ -116,7 +116,11 @@ ToolTip="MaterialDesignFlatLightButton" Foreground="Black" Margin="0 0 0 0" Heig
  >
 
                         <Button Background="{x:Null}" Width="122" Height="118" BorderBrush="{x:Null}" Click="Button_Click_1">
-                            <Image x:Name="ProfileImageSource" Source="\Resources\Images\DefaultUserAvatar.png" Height="90" Width="96" />
+                            <Image x:Name="ProfileImageSource" Source="DefaultUserAvatar.png" Height="90" Width="96" >
+                                <Image.OpacityMask>
+                                    <ImageBrush ImageSource="DefaultUserAvatar.png"/>
+                                </Image.OpacityMask>
+                            </Image>
                         </Button>
                     </materialDesign:Badged>
                     <TextBox x:Name="signupNameTextBox"
@@ -130,34 +134,23 @@ materialDesign:TextFieldAssist.HasClearButton="True" Margin="0 20 0 0" Width="20
   materialDesign:TransitionAssist.DisableTransitions="True"
   MaxLength="10" Width="200" Margin="0 20 0 0" materialDesign:HintAssist.Hint="Number of phone"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="Black" SelectionBrush="Black"
   />
-                    <ComboBox x:Name="signupPositionComboBox"
-  materialDesign:HintAssist.Hint="Position" Width="200" Margin="0 20 0 0" Style="{StaticResource MaterialDesignFilledComboBox}"
- >
-                        <ComboBoxItem
-    Content="Director" />
-                        <ComboBoxItem
-    Content="Sale Mannager" />
-                        <ComboBoxItem
-    Content="Sale Team`s Lead" />
-                        <ComboBoxItem
-    Content="System Administrator" />
-                    </ComboBox>
                     <TextBox x:Name="signupLoginTextBox"
   VerticalAlignment="Center"
   materialDesign:HintAssist.Hint="Login"
   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" Margin="0 20 0 0" CaretBrush="Black" SelectionBrush="Black"
   />
+                    
                     <PasswordBox x:Name="signupPasswordBox"
   materialDesign:HintAssist.HelperText="Minimum of 8 char, 1 number 1 letter"
   materialDesign:HintAssist.Hint="Password"
   materialDesign:TextFieldAssist.HasClearButton="True" Width="200" Margin="0 20 0 0"
-                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="Black" SelectionBrush="Black"
+                         Style="{StaticResource MaterialDesignRevealPasswordBox}" CaretBrush="Black" SelectionBrush="Black" Height="34.0610677083333"
   />
                     <PasswordBox
 x:Name="PasswordBoxSignupCheker"
 materialDesign:HintAssist.Hint="Enter Password again"
-materialDesign:TextFieldAssist.HasClearButton="True" Width="200" Margin="0 20 0 0"
-                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="Black" SelectionBrush="Black"
+materialDesign:TextFieldAssist.HasClearButton="True" Width="200"  Margin="0 20 0 0"
+                          Style="{StaticResource MaterialDesignRevealPasswordBox}"  CaretBrush="Black" SelectionBrush="Black" Height="34.0610677083333"
 />
                     <Button x:Name="SignupButton" Content="Sign up" Background="Black" BorderBrush="Black" Foreground="White" Width="220" Margin="0 40 0 0" Click="Button_Click"/>
                 </StackPanel>

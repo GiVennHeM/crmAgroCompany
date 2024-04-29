@@ -1,9 +1,9 @@
-﻿namespace API.dbContext.Models
+﻿namespace api.dbContext.Models
 {
     public class Deal
     {
         [Key]
-        public int Id { get; set; }
+        public int DealId { get; set; }
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
@@ -17,11 +17,8 @@
         public double Cash { get; set; }
         [Required]
         public int Lead { get; set; }
-        [Required]
-        [MaxLength(100)]
-        public ICollection<Customer> CostumerId { get; set; }
-        [Required]
-        [MaxLength(100)]
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
         public ICollection<Product> ProductsId { get; set; }
     }
 }
