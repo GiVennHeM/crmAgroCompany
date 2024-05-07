@@ -1,0 +1,46 @@
+﻿<Page x:Class="Client.View.Pages.ContactPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:Client.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="470" d:DesignWidth="890"
+      Title="ContactPage" Background="#F9F3E7">
+    <Grid>
+        <StackPanel x:Name="ContactInfo" Orientation="Vertical" Visibility="Collapsed">
+            <TextBox x:Name="Name" FontWeight="Bold" Text="Name and surname" FontSize="48" Margin="20 20" FontFamily="Microsoft YaHei UI" CaretBrush="#FF1A1A14" SelectionBrush="#FF181914"/>
+            <StackPanel Orientation="Horizontal" >
+                <TextBox x:Name="NumberofPhone" Text="000000000" FontSize="24" Margin="20" FontWeight="Bold" FontFamily="Microsoft YaHei UI" CaretBrush="#FF1A1A14" SelectionBrush="#FF181914"/>
+                <TextBox x:Name="Email" Text="Email" FontSize="24" Margin="20" FontWeight="Bold"  FontFamily="Microsoft YaHei UI" CaretBrush="#FF1A1A14" SelectionBrush="#FF181914"/>
+                <TextBox x:Name="Age" Text="Age" HorizontalAlignment="Right" FontSize="24" Margin="20" FontWeight="Bold"  FontFamily="Microsoft YaHei UI" CaretBrush="#FF1A1A14" SelectionBrush="#FF181914"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="Address" Text="Address" FontSize="20" Margin="20" FontWeight="Bold"  FontFamily="Microsoft YaHei UI" />
+                <TextBox x:Name="City" Text="City" FontSize="20" Margin="20" FontWeight="Bold"  FontFamily="Microsoft YaHei UI" />
+                <TextBox x:Name="Region" Text="Region" FontSize="20" Margin="20" FontWeight="Bold"  FontFamily="Microsoft YaHei UI" />
+                <TextBox x:Name="PostalCode" Text="PostalCode" FontSize="20" Margin="20" FontWeight="Bold"  FontFamily="Microsoft YaHei UI" />
+                <TextBox x:Name="Country" Text="Country" FontSize="20" Margin="20" FontWeight="Bold"  FontFamily="Microsoft YaHei UI" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="DataCreated" Text="DataCreated" FontSize="22" Margin="20" FontWeight="Bold"  FontFamily="Microsoft YaHei UI"/>
+                <TextBlock x:Name="Creator" Text="Creator" FontSize="24" Margin="22" FontWeight="Bold"  FontFamily="Microsoft YaHei UI"/>
+            </StackPanel>
+            <TextBox x:Name="addContactDescription"
+Height="100" FontSize="20" FontWeight="Bold"
+materialDesign:HintAssist.Hint="Description"
+AcceptsReturn="True"
+Style="{StaticResource MaterialDesignOutlinedTextBox}"
+TextWrapping="Wrap"
+VerticalScrollBarVisibility="Auto" Width="770" Margin="0 20 0 0"
+/>
+        </StackPanel>
+        <StackPanel x:Name="ContactLeadInfo" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

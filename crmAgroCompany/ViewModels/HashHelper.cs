@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace crmAgroCompany.Classes
+namespace Client.ViewModels
 {
     internal class HashHelper
     {
@@ -22,10 +22,8 @@ namespace crmAgroCompany.Classes
 
         public static bool VerifyHash(string input, string hashedPassword)
         {
-            // Compute the hash of the input
             string inputHash = ComputeHash(input);
 
-            // Compare the computed hash with the stored hashed password
             return inputHash.Equals(hashedPassword);
         }
     }

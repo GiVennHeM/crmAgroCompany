@@ -1,6 +1,5 @@
-﻿using crmAgroCompany.Classes;
-
-namespace crmAgroCompany
+﻿
+namespace Client.View.Widows
 {
     public partial class AddNewCustomer : Window
     {

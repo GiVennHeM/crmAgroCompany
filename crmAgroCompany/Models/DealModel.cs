@@ -1,9 +1,9 @@
-﻿namespace crmAgroCompany
+﻿namespace Client.Models
 {
     public class Deal
     {
         [Key]
-        public int Id { get; set; }
+        public int DealId { get; set; }
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
@@ -14,13 +14,8 @@
         [MaxLength(100)]
         public string Region { get; set; }
         [Required]
-        [MaxLength(100)]
         public double Cash { get; set; }
         [Required]
-        [MaxLength(100)]
-        public DateTime Date { get; set; }
-        [Required]
-        [MaxLength(1)]
         public int Lead { get; set; }
     }
 }

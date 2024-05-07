@@ -1,14 +1,14 @@
-﻿namespace crmAgroCompany
+﻿namespace Client.Models
 {
-    public class LoggerUser
+    public class User
     {
         [Key]
-        public int Id { get; set; }
+        public int UserId { get; set; }
         [Required]
         [MaxLength(50)]
         public string UserName { get; set; }
         [Required]
-        [MaxLength(50)]
+        [MaxLength(256)]
         public string Password { get; set; }
         [Required]
         [MaxLength(100)]
@@ -18,9 +18,14 @@
         public string PhoneNumber { get; set; }
         [Required]
         [MaxLength(200)]
-        public string ProfilePicture { get; set; }
+        public string Avatar { get; set; }
         [Required]
         [MaxLength(100)]
         public string Surname { get; set; }
+        [Required]
+        public string Role { get; set; }
+        [Required]
+        public string Email { get; set; }
+        public int QuantityOfСreated { get; set; }
     }
 }

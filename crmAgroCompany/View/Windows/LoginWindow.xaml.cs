@@ -1,5 +1,14 @@
-﻿using crmAgroCompany.Classes;
-namespace crmAgroCompany
+﻿using Client.View.Windows;
+using Client.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.VisualBasic.ApplicationServices;
+using System.Security.Policy;
+using static System.Net.WebRequestMethods;
+using System.Diagnostics;
+namespace Client.View.Windows
 {
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
@@ -13,8 +22,8 @@ namespace crmAgroCompany
                 LoginObjectsGrid.Visibility = Visibility.Collapsed;
                 SignupObjectsGrid.Visibility = Visibility.Collapsed;
                 gridOpen.Visibility = Visibility.Visible;
-
-          
+            loginGridTextbox.Text = "admin";
+            passwordGridTextbox.Password = "1233211233213";
         }
 
             private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -27,7 +36,7 @@ namespace crmAgroCompany
                 gridOpen.Visibility = Visibility.Collapsed;
                 SignupObjectsGrid.Visibility = Visibility.Visible;
             }
-
+           
             private async void Button_Click(object sender, RoutedEventArgs e)
             {
             var profileimagesource = Convert.ToString(ProfileImageSource.Source);
@@ -35,7 +44,9 @@ namespace crmAgroCompany
             var name = signupNameTextBox.Text;
             var surname = signupSurnameTextBox.Text;
             var numberofphone = signupNumberofphoneTextBox.Text;
-            var password = "";
+            var password = signupPasswordBox.Password;
+            var role = TypeofAccountCombobox.Text;
+            var email = emailTextBox.Text;
             if (signupPasswordBox.Password == PasswordBoxSignupCheker.Password)
             {
                 password = signupPasswordBox.Password;
@@ -48,11 +59,13 @@ namespace crmAgroCompany
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) ||
                 string.IsNullOrEmpty(numberofphone) ||
-                string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(email))
             {
                 MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+
 
             if (!IsPhoneNumberValid(numberofphone))
             {
@@ -60,45 +73,44 @@ namespace crmAgroCompany
                 return;
             }
 
-            if (!IsPasswordValid(password))
+            if (password.Length<8)
             {
-                MessageBox.Show("Password must be at least 8 characters long and contain numbers and symbols.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Password must be at least 8 characters long.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             
             try
             {
-                LoggerUser loggerUser = new LoggerUser()
+                Client.Models.User user = new Client.Models.User()
                 {
-                    ProfilePicture = profileimagesource,
+                    Avatar = profileimagesource,
                     UserName = name,
                     Surname = surname,
                     PhoneNumber = numberofphone,
                     Login = login,
-                    Password = password
+                    Password = password,
+                    Role = role,
+                    Email = email,
+                    QuantityOfСreated = 5
                 };
 
-                var jsonSettings = new JsonSerializerSettings();
-                var json = JsonConvert.SerializeObject(loggerUser, jsonSettings);
+                var json = JsonConvert.SerializeObject(user);
 
-                // Create StringContent with JSON data
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                // Send HTTP POST request to API endpoint
                 using (var client = new HttpClient())
                 {
-                    var response = await client.PostAsync("https://localhost:7280/api/Customer/loggerUsers", content);
+                    var response = await client.PostAsync("https://localhost:7280/api/signup", content);
 
                     if (response.IsSuccessStatusCode)
                     {
                         MessageBox.Show("User was successfully added.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                         ResetFields();
-                        
                     }
                     else
                     {
-                        MessageBox.Show("Error adding user.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Error adding user:{response}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -110,24 +122,7 @@ namespace crmAgroCompany
 
             private bool IsPhoneNumberValid(string phoneNumber)
             {
-
                 return phoneNumber.All(char.IsDigit);
-            }
-
-            private bool IsPasswordValid(string password)
-            {
-                // Check if password is at least 8 characters long
-                if (password.Length < 8)
-                {
-                    return false;
-                }
-
-                // Check if password contains at least one digit
-                if (!password.Any(char.IsDigit))
-                {
-                    return false;
-                }
-                return true;                    
             }
 
 
@@ -140,21 +135,22 @@ namespace crmAgroCompany
                 ResetFields();
             }
 
-            private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Images (*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif|All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
+                var imagePath = openFileDialog.FileName;
+                BitmapImage bitmapImage = new BitmapImage(new Uri(imagePath));
 
-                openFileDialog.Filter = "Изображения (*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif|Все файлы (*.*)|*.*";
-
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    var imagePath = openFileDialog.FileName;
-                    BitmapImage bitmapImage = new BitmapImage(new Uri(imagePath));
-
-                    ProfileImageSource.Source = bitmapImage;
-                }
+               
             }
-            private void ResetFields()
+        }
+
+        
+        private void ResetFields()
             {
                 signupNameTextBox.Text = "";
                 signupSurnameTextBox.Text = "";
@@ -167,33 +163,41 @@ namespace crmAgroCompany
                 LoginObjectsGrid.Visibility = Visibility.Collapsed;
                 SignupObjectsGrid.Visibility = Visibility.Collapsed;
             }
-            private async void Button_Click_2(object sender, RoutedEventArgs e)
-            {
-                var login = loginGridTextbox.Text; 
-                var password = passwordGridTextbox.Password;
-
+        private async void Button_Click_2(object sender, RoutedEventArgs e)
+        {
             try
             {
+                var login = loginGridTextbox.Text;
+                var password = passwordGridTextbox.Password;
+
+                LoginModel model = new LoginModel()
+                {
+                    Login = login,
+                    Password = password
+                };
+
+                var json = JsonConvert.SerializeObject(model);
+
+                // Create StringContent with JSON data
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                // Send HTTP POST request to API endpoint
                 using (var client = new HttpClient())
                 {
-                    var response = await client.GetAsync("http://localhost:7280/api/Customer/loggerUser");
+                    var response = await client.PostAsync("https://localhost:7280/api/login", content);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        var json = await response.Content.ReadAsStringAsync();
-                        var loggers = JsonConvert.DeserializeObject<List<Customer>>(json);
+                        var jsonResponse = await response.Content.ReadAsStringAsync();
 
-                        foreach(var c in loggers)
-                        {
-                            
-                        }
-                        MessageBox.Show("Login successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Authentication successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                         loginGridTextbox.Text = "";
                         passwordGridTextbox.Password = "";
                         ResetFields();
-                        Hide();
-                        MainWindow mainWindow = new MainWindow();
+                        
+                        MainWindow mainWindow = new MainWindow(jsonResponse);
                         mainWindow.Show();
+                        this.Close();
                     }
                     else
                     {
@@ -206,6 +210,40 @@ namespace crmAgroCompany
                 MessageBox.Show($"Error logging in: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        public class LoginModel
+        {
+            public string Login { get; set; }
+            public string Password { get; set; }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            var url = "https://www.instagram.com/bogggddan.kr";
+
+            try
+            {
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open URL: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            var url = "https://github.com/nationalistUAStormtrooper/crmAgroCompany";
+
+            try
+            {
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open URL: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
+}
     

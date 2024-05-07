@@ -1,8 +1,6 @@
-﻿using crmAgroCompany;
-
-namespace api.dbContext.Models
+﻿namespace Client.Models
 {
-    public class Product
+    public class ProductModel
     {
         [Key]
         public int ProductId { get; set; }
@@ -16,6 +14,5 @@ namespace api.dbContext.Models
         public double Price { get; set; }
         [Required]
         public double TotalAmount { get; set; }
-
     }
 }
