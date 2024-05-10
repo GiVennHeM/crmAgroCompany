@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using System.Globalization;
-using System.Windows.Data;
+﻿using Client.View.Pages.Tabs;
+using MaterialDesignThemes.Wpf;
+using Newtonsoft.Json.Linq;
 using System.Windows.Media;
 
 namespace Client.View.Windows
@@ -8,19 +8,8 @@ namespace Client.View.Windows
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
-
-        private List<Contact> _contacts;
-        public List<Contact> Contacts
-        {
-            get { return _contacts; }
-            set
-            {
-                _contacts = value;
-                OnPropertyChanged(nameof(Contacts));
-            }
-        }
 
         private User _user;
         private readonly string _token;
@@ -34,7 +23,6 @@ namespace Client.View.Windows
             clientsBorder.Visibility = Visibility.Collapsed;
             productBorder.Visibility = Visibility.Collapsed;
             dealBorder.Visibility = Visibility.Collapsed;
-            contactsBorder.Visibility = Visibility.Collapsed;
             settingsBorder.Visibility = Visibility.Collapsed;
             staffDataGrid.IsReadOnly = true;
             DataContext = this;
@@ -161,7 +149,6 @@ values.Count > 20 ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(
             productBorder.Visibility = Visibility.Collapsed;
             dealBorder.Visibility = Visibility.Collapsed;
             clientsBorder.Visibility = Visibility.Visible;
-            contactsBorder.Visibility = Visibility.Collapsed;
             settingsBorder.Visibility = Visibility.Collapsed;
             await LoadStaff(); // Ensure that LoadStaff is awaited
         }
@@ -193,29 +180,10 @@ values.Count > 20 ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(
             clientsBorder.Visibility = Visibility.Collapsed;
             productBorder.Visibility = Visibility.Collapsed;
             dealBorder.Visibility = Visibility.Collapsed;
-            contactsBorder.Visibility = Visibility.Collapsed;
             settingsBorder.Visibility = Visibility.Collapsed;
         }
 
-        private void addContactButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (NewContactBorder.Visibility == Visibility.Collapsed)
-            {
-                // Show NewContactBorder and hide contactsDataGrid and BorderEditContact
-                NewContactBorder.Visibility = Visibility.Visible;
-                contactsDataGrid.Visibility = Visibility.Collapsed;
-                BorderCardsContact.Visibility = Visibility.Collapsed;
 
-            }
-            else if (NewContactBorder.Visibility == Visibility.Visible)
-            {
-                // Hide NewContactBorder and show contactsDataGrid and BorderEditContact
-                NewContactBorder.Visibility = Visibility.Collapsed;
-                contactsDataGrid.Visibility = Visibility.Visible;
-                BorderCardsContact.Visibility = Visibility.Collapsed;
-            }
-
-        }
 
         private void DealButton_Click(object sender, RoutedEventArgs e)
         {
@@ -223,7 +191,6 @@ values.Count > 20 ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(
             clientsBorder.Visibility = Visibility.Collapsed;
             productBorder.Visibility = Visibility.Collapsed;
             dealBorder.Visibility = Visibility.Visible;
-            contactsBorder.Visibility = Visibility.Collapsed;
             settingsBorder.Visibility = Visibility.Collapsed;
         }
 
@@ -233,7 +200,6 @@ values.Count > 20 ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(
             clientsBorder.Visibility = Visibility.Hidden;
             productBorder.Visibility = Visibility.Hidden;
             dealBorder.Visibility = Visibility.Visible;
-            contactsBorder.Visibility = Visibility.Collapsed;
             settingsBorder.Visibility = Visibility.Collapsed;
         }
 
@@ -243,7 +209,6 @@ values.Count > 20 ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(
             clientsBorder.Visibility = Visibility.Collapsed;
             productBorder.Visibility = Visibility.Visible;
             dealBorder.Visibility = Visibility.Collapsed;
-            contactsBorder.Visibility = Visibility.Collapsed;
             settingsBorder.Visibility = Visibility.Collapsed;
         }
         public class JwtTokenValidator
@@ -294,63 +259,12 @@ values.Count > 20 ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(
             clientsBorder.Visibility = Visibility.Collapsed;
             productBorder.Visibility = Visibility.Collapsed;
             dealBorder.Visibility = Visibility.Collapsed;
-            contactsBorder.Visibility = Visibility.Visible;
             settingsBorder.Visibility = Visibility.Collapsed;
-            LoadContacts();
-        }
-        private async void LoadContacts()
-        {
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    var response = await client.GetAsync("https://localhost:7280/api/Contacts");
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var json = await response.Content.ReadAsStringAsync();
-                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
-
-                        var filteredContacts = Contacts.Select(c => new
-                        {
-                            c.ContactId,
-                            c.Name,
-                            c.Surname,
-                            c.PhoneNumber,
-                            c.Email,
-                            c.Address,
-                            c.City,
-                            c.Region,
-                            c.PostalCode,
-                            c.Country,
-                            c.Age,
-                            c.CreatedDate,
-                            Creator = c.CreatorUserId
-                        }).ToList();
-
-                        contactsDataGrid.ItemsSource = filteredContacts;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to retrieve contact data. Status code: " + response.StatusCode);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred while loading contacts: " + ex.Message);
-            }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            mainFrame.Navigate(new ContactsPageView(_token));
         }
 
-        private void contactsDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
-        {
 
-        }
+
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
@@ -359,11 +273,7 @@ values.Count > 20 ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(
             this.Close();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            contactsBorder.Visibility = Visibility.Collapsed;
-            contactsDataGrid.Visibility = Visibility.Collapsed;
-        }
+
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
@@ -371,160 +281,15 @@ values.Count > 20 ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(
             clientsBorder.Visibility = Visibility.Collapsed;
             productBorder.Visibility = Visibility.Collapsed;
             dealBorder.Visibility = Visibility.Collapsed;
-            contactsBorder.Visibility = Visibility.Collapsed;
 
             settingsBorder.Visibility = Visibility.Visible;
         }
 
-        private async void Button_Click_3(object sender, RoutedEventArgs e)
+
+
+        private async void NewLeadContactCard_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                var name = string.IsNullOrEmpty(addContactName.Text) ? null : addContactName.Text;
-                var surname = string.IsNullOrEmpty(addContactSurname.Text) ? null : addContactSurname.Text;
-                var numberphone = string.IsNullOrEmpty(addContactNumberofphoneTextBox.Text) ? null : addContactNumberofphoneTextBox.Text;
-                var email = string.IsNullOrEmpty(addContactEmail.Text) ? null : addContactEmail.Text;
-                var address = string.IsNullOrEmpty(addContactAddress.Text) ? null : addContactAddress.Text;
-                var city = string.IsNullOrEmpty(addContactCity.Text) ? null : addContactCity.Text;
-                var region = string.IsNullOrEmpty(addContactRegion.Text) ? null : addContactRegion.Text;
-                var country = string.IsNullOrEmpty(addContactCountry.Text) ? null : addContactCountry.Text;
-                var postalcode = string.IsNullOrEmpty(addContactPostalCode.Text) ? null : addContactPostalCode.Text;
-                var ageText = string.IsNullOrEmpty(addContactAge.Text) ? null : addContactAge.Text;
-                var description = string.IsNullOrEmpty(addContactDescription.Text) ? null : addContactDescription.Text;
-                var lead = false;
-                if (addContactlead.IsChecked == true)
-                {
-                    lead = true;
-                }
-                else lead = false;
-                if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) || string.IsNullOrEmpty(numberphone))
-                {
-                    MessageBox.Show("Please fill in all required fields (Name, surname, and number of phone).", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
 
-                int? age = null;
-                if (int.TryParse(ageText, out int parsedAge))
-                {
-                    age = parsedAge;
-                }
-
-                Contact contact = new Contact()
-                {
-                    Name = name,
-                    Surname = surname,
-                    PhoneNumber = numberphone,
-                    Email = email,
-                    Address = address,
-                    City = city,
-                    Region = region,
-                    Country = country,
-                    PostalCode = postalcode,
-                    Age = age,
-                    Description = description,
-                    CreatedDate = DateTime.Now,
-                    CreatorUserId = _user.UserId,
-                    Lead = lead
-                };
-                if (contact.Lead)
-                {
-                    contact.LeadStatus = LeadStatus.New;
-                    contact.LastContactDate = DateTime.Now;
-                    contact.LastContactedBy = $"{_user.UserName} {_user.Surname}";
-                    if (addContactLeadSource.SelectedIndex == 0)
-                    {
-                        contact.LeadSource = LeadSource.Personal;
-                    }
-                    if (addContactLeadSource.SelectedIndex == 1)
-                    {
-                        contact.LeadSource = LeadSource.International;
-                    }
-                    if (addContactLeadSource.SelectedIndex == 2)
-                    {
-                        contact.LeadSource = LeadSource.Client;
-                    }
-                }
-
-                string jsonContact = JsonConvert.SerializeObject(contact);
-
-                using (var client = new HttpClient())
-                {
-                    var content = new StringContent(jsonContact, Encoding.UTF8, "application/json");
-
-                    var response = await client.PostAsync("https://localhost:7280/api/Contact", content);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        _user.QuantityOfСreated++;
-
-                        addContactName.Text = "";
-                        addContactSurname.Text = "";
-                        addContactNumberofphoneTextBox.Text = "";
-                        addContactEmail.Text = "";
-                        addContactAddress.Text = "";
-                        addContactCity.Text = "";
-                        addContactRegion.Text = "";
-                        addContactCountry.Text = "";
-                        addContactPostalCode.Text = "";
-                        addContactAge.Text = "";
-                        addContactDescription.Text = "";
-
-                        LoadContacts();
-                        NewContactBorder.Visibility = Visibility.Collapsed;
-                        contactsDataGrid.Visibility = Visibility.Visible;
-                        MessageBox.Show("Successful added new contact " + contact.Name, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to retrieve contact data. Status code: " + response.StatusCode, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred while loading contacts: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-        }
-
-        private void RadioButtonGroupChoiceChipPrimaryOutline_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (RadioButtonGroupChoiceChipPrimaryOutline.SelectedItem != null)
-            {
-                var selectedListItem = (RadioButtonGroupChoiceChipPrimaryOutline.SelectedItem as ListBoxItem).Content.ToString();
-
-                if (selectedListItem == "Cards")
-                {
-                    contactsDataGrid.Visibility = Visibility.Collapsed;
-                    BorderCardsContact.Visibility = Visibility.Visible;
-                    NewContactBorder.Visibility = Visibility.Collapsed;
-                }
-                else if (selectedListItem == "Table")
-                {
-                    contactsDataGrid.Visibility = Visibility.Visible;
-                    BorderCardsContact.Visibility = Visibility.Collapsed;
-                    NewContactBorder.Visibility = Visibility.Collapsed;
-                }
-            }
-        }
-        public class BoolToVisibilityConverter : IValueConverter
-        {
-            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                if (value is bool isChecked && isChecked)
-                {
-                    return Visibility.Visible;
-                }
-                else
-                {
-                    return Visibility.Collapsed;
-                }
-            }
-
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 

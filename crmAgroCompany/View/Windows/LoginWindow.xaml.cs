@@ -1,44 +1,35 @@
-﻿using Client.View.Windows;
-using Client.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.VisualBasic.ApplicationServices;
-using System.Security.Policy;
-using static System.Net.WebRequestMethods;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 namespace Client.View.Windows
 {
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
     /// </summary>
     public partial class LoginWindow : Window
-        {
+    {
         private readonly string _connectionString;
         public LoginWindow()
-            {
-                InitializeComponent();
-                LoginObjectsGrid.Visibility = Visibility.Collapsed;
-                SignupObjectsGrid.Visibility = Visibility.Collapsed;
-                gridOpen.Visibility = Visibility.Visible;
+        {
+            InitializeComponent();
+            LoginObjectsGrid.Visibility = Visibility.Collapsed;
+            SignupObjectsGrid.Visibility = Visibility.Collapsed;
+            gridOpen.Visibility = Visibility.Visible;
             loginGridTextbox.Text = "admin";
             passwordGridTextbox.Password = "1233211233213";
         }
 
-            private void LoginButton_Click(object sender, RoutedEventArgs e)
-            {
-                gridOpen.Visibility = Visibility.Collapsed;
-                LoginObjectsGrid.Visibility = Visibility.Visible;
-            }
-            private void SignUpButton_Click(Object sender, RoutedEventArgs e)
-            {
-                gridOpen.Visibility = Visibility.Collapsed;
-                SignupObjectsGrid.Visibility = Visibility.Visible;
-            }
-           
-            private async void Button_Click(object sender, RoutedEventArgs e)
-            {
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            gridOpen.Visibility = Visibility.Collapsed;
+            LoginObjectsGrid.Visibility = Visibility.Visible;
+        }
+        private void SignUpButton_Click(Object sender, RoutedEventArgs e)
+        {
+            gridOpen.Visibility = Visibility.Collapsed;
+            SignupObjectsGrid.Visibility = Visibility.Visible;
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
             var profileimagesource = Convert.ToString(ProfileImageSource.Source);
             var login = signupLoginTextBox.Text;
             var name = signupNameTextBox.Text;
@@ -73,13 +64,13 @@ namespace Client.View.Windows
                 return;
             }
 
-            if (password.Length<8)
+            if (password.Length < 8)
             {
                 MessageBox.Show("Password must be at least 8 characters long.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            
+
             try
             {
                 Client.Models.User user = new Client.Models.User()
@@ -120,20 +111,20 @@ namespace Client.View.Windows
             }
         }
 
-            private bool IsPhoneNumberValid(string phoneNumber)
-            {
-                return phoneNumber.All(char.IsDigit);
-            }
+        private bool IsPhoneNumberValid(string phoneNumber)
+        {
+            return phoneNumber.All(char.IsDigit);
+        }
 
 
-            private void Window_Closed(object sender, EventArgs e)
-            {
-            }
+        private void Window_Closed(object sender, EventArgs e)
+        {
+        }
 
-            private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-            {
-                ResetFields();
-            }
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            ResetFields();
+        }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -145,24 +136,24 @@ namespace Client.View.Windows
                 var imagePath = openFileDialog.FileName;
                 BitmapImage bitmapImage = new BitmapImage(new Uri(imagePath));
 
-               
+
             }
         }
 
-        
+
         private void ResetFields()
-            {
-                signupNameTextBox.Text = "";
-                signupSurnameTextBox.Text = "";
-                signupNumberofphoneTextBox.Text = "";
-                signupLoginTextBox.Text = "";
-                signupPasswordBox.Password = "";
-                loginGridTextbox.Text = "";
-                passwordGridTextbox.Password = "";
-                gridOpen.Visibility = Visibility.Visible;
-                LoginObjectsGrid.Visibility = Visibility.Collapsed;
-                SignupObjectsGrid.Visibility = Visibility.Collapsed;
-            }
+        {
+            signupNameTextBox.Text = "";
+            signupSurnameTextBox.Text = "";
+            signupNumberofphoneTextBox.Text = "";
+            signupLoginTextBox.Text = "";
+            signupPasswordBox.Password = "";
+            loginGridTextbox.Text = "";
+            passwordGridTextbox.Password = "";
+            gridOpen.Visibility = Visibility.Visible;
+            LoginObjectsGrid.Visibility = Visibility.Collapsed;
+            SignupObjectsGrid.Visibility = Visibility.Collapsed;
+        }
         private async void Button_Click_2(object sender, RoutedEventArgs e)
         {
             try
@@ -194,7 +185,7 @@ namespace Client.View.Windows
                         loginGridTextbox.Text = "";
                         passwordGridTextbox.Password = "";
                         ResetFields();
-                        
+
                         MainWindow mainWindow = new MainWindow(jsonResponse);
                         mainWindow.Show();
                         this.Close();
@@ -246,4 +237,4 @@ namespace Client.View.Windows
         }
     }
 }
-    
+

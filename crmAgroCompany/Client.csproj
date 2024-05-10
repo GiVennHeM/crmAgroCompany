@@ -41,5 +41,10 @@
     <Resource Include="View\Windows\agropro-high-resolution-logo-white-transparent.png" />
     <Resource Include="View\Windows\DefaultUserAvatar.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="View\Cards\ContactCards\ContactCardView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 
 </Project>

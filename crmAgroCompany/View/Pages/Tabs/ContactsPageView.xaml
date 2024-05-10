@@ -1,0 +1,258 @@
+﻿<Page x:Class="Client.View.Pages.Tabs.ContactsPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:crd="clr-namespace:Client.View.Cards"
+      xmlns:vm="clr-namespace:Client.ViewModels"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:Client.View.Pages.Tabs"
+      mc:Ignorable="d" 
+     
+      Height="629"
+    Width="1246"
+    MinHeight="629" MinWidth="1246 "
+    MaxHeight="629" MaxWidth="1246 "
+      Title="ContactsPageView" Background="#FFC9C9C9">
+    
+    <Page.Resources>
+        <vm:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Border x:Name="contactsBorder" Margin="7,17,-8,3" Visibility="Visible" Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="1">
+            <Grid Margin="6,8,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="106*"/>
+                    <RowDefinition Height="495*"/>
+                </Grid.RowDefinitions>
+                <materialDesign:Badged
+             Badge="New Contact"
+             BadgeColorZoneMode="Dark" Margin="0,28,0,0"
+             >
+                    <Button materialDesign:ElevationAssist.Elevation="Dp16"
+                     Content="{materialDesign:PackIcon Kind=PencilPlus}" Margin="25 0 0 0"
+                     ToolTip="List View"  VerticalAlignment="Center" Height="40"  IsEnabled="True" Click="addContactButton_Click" Width="70" Background="Wheat" BorderBrush="{x:Null}"/>
+
+                </materialDesign:Badged>
+                <Border Grid.Row="0" Grid.Column="0" Height="50" Width="360" Background="#F9F3E7" CornerRadius="10" Margin="145,20,736,36" materialDesign:ElevationAssist.Elevation="Dp16">
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Height="50" Margin="1,0,0,-1">
+
+                        <ListBox Margin="10 0 0 0" Background="#131F23"
+                          x:Name="RadioButtonGroupChoiceChipPrimaryOutline" SelectionChanged="RadioButtonGroupChoiceChipPrimaryOutline_SelectionChanged"
+                          Style="{StaticResource MaterialDesignChoiceChipListBox}" Height="40" Width="129"
+                          >
+                            <ListBoxItem
+                         Content="Cards"  />
+                            <ListBoxItem
+                         Content="Table"
+                         />
+                        </ListBox>
+
+                        <ListBox Margin="10 0 0 0" Background="#131F23"
+                          x:Name="MyRadioButtonGroupChoiceChipPrimaryOutline"
+                          Style="{StaticResource MaterialDesignChoiceChipListBox}" Height="40" Width="210"
+                          >
+                            <ListBoxItem
+                         Content="All contacts" IsSelected="True" />
+                            <ListBoxItem
+                         Content="My contacts"
+                         />
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="0" Background="#F9F3E7" Height="50" Width="360" CornerRadius="10" Margin="540,20,341,36" materialDesign:ElevationAssist.Elevation="Dp16">
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="1,0,0,-1">
+                        <ListBox Margin="10 5 0 0"
+                          Style="{StaticResource MaterialDesignFilterChipListBox}"
+                          >
+                            <ListBoxItem
+                         Content="City" />
+                            <ListBoxItem
+                         Content="PostalCode"
+                         />
+                            <ListBoxItem
+                         Content="Country" />
+                            <ListBoxItem
+                         Content="Age"
+                         />
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+                <Border x:Name="NewContactBorder" Visibility="Collapsed" CornerRadius="10" Grid.Column="0" Background="#FFFFF4DF" Margin="41,87,315,45" Grid.RowSpan="2">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="addContactName" Margin="50 20 0 0"
+                              materialDesign:HintAssist.Hint="Name"
+                              materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="True" IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="Black" SelectionBrush="Black" Canvas.Left="201" Canvas.Top="12" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionTextBrush="{x:Null}"/>
+                            <TextBox x:Name="addContactSurname" Margin="80 20 0 0"
+                              materialDesign:HintAssist.Hint="Surname"
+                              materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="True" IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="Black" SelectionBrush="Black" Canvas.Left="201" Canvas.Top="12" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="addContactNumberofphoneTextBox" Margin="80 20 0 0"
+                              materialDesign:TransitionAssist.DisableTransitions="True"
+                              MaxLength="10" Width="200" materialDesign:HintAssist.Hint="Number of phone"  Style="{StaticResource MaterialDesignFilledTextBox}" CaretBrush="Black" SelectionBrush="Black"
+                              />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="addContactEmail" Margin="50 20 0 0"
+                              materialDesign:HintAssist.Hint="Email"
+                              materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="True" IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="Black" SelectionBrush="Black" Canvas.Left="201" Canvas.Top="12" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="addContactAddress" Margin="80 20 0 0"
+                              materialDesign:HintAssist.Hint="Address"
+                              materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="True" IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="Black" SelectionBrush="Black" Canvas.Left="201" Canvas.Top="12" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="addContactCity" Margin="80 20 0 0"
+                              materialDesign:HintAssist.Hint="City"
+                              materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="True" IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="Black" SelectionBrush="Black" Canvas.Left="201" Canvas.Top="12" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="addContactRegion" Margin="50 20 0 0"
+                              materialDesign:HintAssist.Hint="Region"
+                              materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="True" IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="Black" SelectionBrush="Black" Canvas.Left="201" Canvas.Top="12" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="addContactPostalCode" Margin="80 20 0 0"
+                              materialDesign:HintAssist.Hint="Postal Code"
+                              materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="True" IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="Black" SelectionBrush="Black" Canvas.Left="201" Canvas.Top="12" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="addContactCountry" Margin="80 20 0 0"
+                              materialDesign:HintAssist.Hint="Country"
+                              materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="True" IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="Black" SelectionBrush="Black" Canvas.Left="201" Canvas.Top="12" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="addContactAge" Margin="50 20 0 0"
+                              materialDesign:HintAssist.Hint="Age"
+                              materialDesign:TextFieldAssist.HasClearButton="True" Width="209" AcceptsReturn="True" IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="Black" SelectionBrush="Black" Canvas.Left="201" Canvas.Top="12" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <CheckBox x:Name="addContactlead" IsChecked="False" Content="Lead (This Contact can be in future deals?)" Margin="30 20 0 0"/>
+                            <ComboBox x:Name="addContactLeadSource" Visibility="{Binding IsChecked, ElementName=addContactlead, Converter={StaticResource BoolToVisibilityConverter}}" materialDesign:HintAssist.Hint="Source " Width="120" Margin="10 20 0 0">
+                                <ComboBoxItem Content="Personal"/>
+                                <ComboBoxItem Content="International (abroad)"/>
+                                <ComboBoxItem Content="Client"/>
+                            </ComboBox>
+                            <ComboBox x:Name="addContactLeadPriority" Visibility="{Binding IsChecked, ElementName=addContactlead, Converter={StaticResource BoolToVisibilityConverter}}" materialDesign:HintAssist.Hint="Priority" Width="120" Margin="10 20 0 0">
+                                <ComboBoxItem Content="Low"/>
+                                <ComboBoxItem Content="Medium"/>
+                                <ComboBoxItem Content="High"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <TextBox x:Name="addContactDescription"
+                          Height="100"
+                          materialDesign:HintAssist.Hint="Description"
+                          AcceptsReturn="True"
+                          Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                          TextWrapping="Wrap"
+                          VerticalScrollBarVisibility="Auto" Width="770" Margin="0 20 0 0"
+                          />
+                        <Button Margin="0 40"
+                         Content="Done creation"
+                         IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                         ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" Width="260" Background="#F5DEB3" Click="Button_Click_3" BorderBrush="{x:Null}"
+                         />
+                    </StackPanel>
+                </Border>
+                <DataGrid x:Name="contactsDataGrid" Height="400" Visibility="Collapsed"  Background="#FFFFF4DF" AutoGenerateColumns="True" Margin="41,0,200,95" Width="1000" d:ItemsSource="{d:SampleData ItemCount=30}" Grid.Row="1"/>
+                <Border  x:Name="BorderCardsContact" Visibility="Visible" CornerRadius="10" Background="#F5DEB3" VerticalAlignment="Top" Margin="20,0,40,0"  Grid.Column="0" Height="400" Width="1150"  Grid.Row="1">
+
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical" Margin="10 0 0 0" Width="180">
+                            <TextBlock Margin="10 0 0 0" Text="Not Leads" FontWeight="Bold" FontSize="24" FontFamily="Microsoft YaHei "/>
+                            <ListView  x:Name="NotLeadContactCard" ItemsSource="{Binding NoLeadContacts}" Margin="0,0,0,0" Width="200" Height="348" BorderBrush="#FF8D4747" Background="#FF955F5F">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate >
+                                        <crd:ContactCardView DataContext="{Binding}" ContactSelected="OnContactSelected"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                        </StackPanel>
+
+                        <StackPanel Margin="10 0 0 0" Width="180" Orientation="Vertical">
+                            <TextBlock Margin="10 0 0 0" Text="New" FontWeight="Bold" FontSize="24" FontFamily="Microsoft YaHei "/>
+                            <ListView  x:Name="NewLeadContactCard" ItemsSource="{Binding NewLeadContacts}" Margin="0,0,0,0" Width="200" Height="354" BorderBrush="#FF8D4747" Background="#FF955F5F">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate >
+                                        <crd:ContactCardView DataContext="{Binding}" ContactSelected="OnContactSelected"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                        <StackPanel Margin="10 0 0 0" Orientation="Vertical">
+                            <TextBlock Margin="10 0 0 0" Text="Contacted" FontWeight="Bold" FontSize="24" FontFamily="Microsoft YaHei "/>
+                            <ListView  x:Name="ContactedLeadContactCard" ItemsSource="{Binding ContactedLeadContacts}" Margin="0,0,0,0" Width="180" Height="354" BorderBrush="#FF8D4747" Background="#FF955F5F">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate >
+                                        <crd:ContactCardView DataContext="{Binding}" ContactSelected="OnContactSelected"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                        <StackPanel Margin="10 0 0 0" Orientation="Vertical">
+                            <TextBlock Margin="10 0 0 0" Text="Qualified" FontWeight="Bold" FontSize="24" FontFamily="Microsoft YaHei "/>
+                            <ListView  x:Name="QualifiedLeadContactCard" ItemsSource="{Binding QualifiedLeadContacts}" Margin="0,0,0,0" Width="180" Height="354" BorderBrush="#FF8D4747" Background="#FF955F5F">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate >
+                                        <crd:ContactCardView DataContext="{Binding}" ContactSelected="OnContactSelected"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                        <StackPanel Margin="10 0 0 0" Orientation="Vertical">
+                            <TextBlock Margin="10 0 0 0" Text="Lost" FontWeight="Bold" FontSize="24" FontFamily="Microsoft YaHei "/>
+                            <ListView  x:Name="LostLeadContactCard" ItemsSource="{Binding LostLeadContacts}" Margin="0,0,0,0" Width="180" Height="354" BorderBrush="#FF8D4747" Background="#FF955F5F">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate >
+                                        <crd:ContactCardView DataContext="{Binding}" ContactSelected="OnContactSelected"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                        <StackPanel Margin="10 0 0 0" Orientation="Vertical">
+                            <TextBlock Margin="10 0 0 0" Text="Coverted" FontWeight="Bold" FontSize="24" FontFamily="Microsoft YaHei "/>
+                            <ListView  x:Name="ConvertedLeadContactCard" ItemsSource="{Binding ConvertedLeadContacts}" Margin="0,0,0,0" Width="180" Height="354" BorderBrush="#FF8D4747" Background="#FF955F5F">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate >
+                                        <crd:ContactCardView DataContext="{Binding}" ContactSelected="OnContactSelected"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </StackPanel>
+
+                </Border>
+            </Grid>
+        </Border>
+        <Frame x:Name="InfoContact" NavigationUIVisibility="Hidden" 
+Height="550" Width="970"/>
+    </Grid>
+</Page>

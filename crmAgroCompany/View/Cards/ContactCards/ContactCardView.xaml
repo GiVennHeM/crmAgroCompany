@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Client.View.Cards.ContactCardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Client.View.Cards"
+             >
+    <UserControl.Resources>
+        <local:LetterConverter x:Key="LetterConverter"/>
+    </UserControl.Resources>
+
+    <materialDesign:Card  MouseLeftButtonDown="Card_MouseLeftButtonDown" x:Name="Card" Width="160" Height="80" Padding="0" Background="#F3F9D2"
+                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+        <Grid>
+          
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <materialDesign:Chip Height="30"
+                                 Grid.Row="0" Margin="5 5 0 0" >
+                <materialDesign:Chip.Content>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="Name"/>
+                                <Binding Path="Surname"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </materialDesign:Chip.Content>
+                <materialDesign:Chip.Icon>
+                    <Binding Path="Name">
+                        <Binding.Converter>
+                            <local:LetterConverter/>
+                        </Binding.Converter>
+                    </Binding>
+                </materialDesign:Chip.Icon>
+            </materialDesign:Chip>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 7 0 0" >
+                <Button x:Name="BackColoumnButton" Content="{materialDesign:PackIcon ChevronLeft}" Click="BackColoumnButton_Click"
+                        ToolTip="Icon" Grid.Row="1" Margin="2 0 0 0"  Height="30" Width="50" HorizontalAlignment="Right"/>
+               <Button x:Name="NextColoumnButton" Margin="5 0 0 0" Content="{materialDesign:PackIcon ChevronRight}" Click="NextColoumnButton_Click"
+                        ToolTip="Icon" Grid.Row="1" Height="30" Width="50" HorizontalAlignment="Right"/>
+            </StackPanel>
+        </Grid>
+    </materialDesign:Card>
+
+</UserControl>

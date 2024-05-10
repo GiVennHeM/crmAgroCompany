@@ -1,4 +1,6 @@
-﻿namespace Client.Models
+﻿using System.Drawing;
+
+namespace Client.Models
 {
     public class Contact
     {

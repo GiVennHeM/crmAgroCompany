@@ -6,9 +6,9 @@ namespace Client
     /// </summary>
     public partial class App : Application
     {
-       private void Application_Startup(object sender, StartupEventArgs e)
+        private void Application_Startup(object sender, StartupEventArgs e)
         {
-            LoginWindow newCustomer= new LoginWindow();
+            LoginWindow newCustomer = new LoginWindow();
             newCustomer.Show();
         }
     }
