@@ -34,17 +34,23 @@
   <ItemGroup>
     <None Remove="LoginWindowsBackground.png" />
     <None Remove="MainWindowBackGround.png" />
+    <None Remove="View\Pages\Tabs\LoginTabs\DefaultUserAvatar.png" />
     <None Remove="View\Windows\agropro-high-resolution-logo-white-transparent.png" />
     <None Remove="View\Windows\DefaultUserAvatar.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="View\Pages\Tabs\LoginTabs\DefaultUserAvatar.png" />
     <Resource Include="View\Windows\agropro-high-resolution-logo-white-transparent.png" />
     <Resource Include="View\Windows\DefaultUserAvatar.png" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="View\Cards\ContactCards\ContactCardView.xaml.cs">
+    <Compile Update="View\Cards\ContactCardView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\NewFolder1\" />
+    <Folder Include="ViewModel\NewFolder\" />
   </ItemGroup>
 
 </Project>

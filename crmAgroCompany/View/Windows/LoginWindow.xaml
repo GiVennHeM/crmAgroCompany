@@ -7,9 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="LoginWindow"
-        Height="720" Width="989"
-        MinHeight="720" MinWidth="945"
-        MaxHeight="720" MaxWidth="945"
+        Height="720" Width="945"
         WindowStyle="ThreeDBorderWindow"
         WindowStartupLocation="CenterScreen"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -18,179 +16,16 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Closed="Window_Closed">
+        >
+
     <Grid Background="#FF131F23" Margin="0,0,0,0">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid x:Name="gridOpen" Visibility="Collapsed" Background="#FF22231E">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="158*"/>
-                <ColumnDefinition Width="157*"/>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" >
-                <Button x:Name="LoginButton"
-                        materialDesign:ButtonAssist.CornerRadius="10"
-                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                        Style="{StaticResource MaterialDesignRaisedButton}"
-                        ToolTip="MaterialDesignRaisedButton with Round Corners"
-                        Margin="13,0,20,50" Width="185" Height="65"
-                        Click="LoginButton_Click">
-                    <Button.BorderBrush>
-                        <SolidColorBrush Color="#FF080807" Opacity="0.2"/>
-                    </Button.BorderBrush>
-                    <Button.Background>
-                        <SolidColorBrush Color="#FFF9F3E7" Opacity="0.885"/>
-                    </Button.Background>
-                    <TextBlock Text="Login" FontSize="30" FontWeight="Bold" FontFamily="Karantina"/>
-                </Button>
-            </Border>
-            <Border Grid.Column="1" Background="White">
-                <Button x:Name="SignUpButton" Grid.Column="1"
-                        materialDesign:ButtonAssist.CornerRadius="10"
-                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                        Style="{StaticResource MaterialDesignRaisedButton}"
-                        ToolTip="MaterialDesignRaisedButton with Round Corners"
-                        Margin="20,0,17,50" Height="65" Width="185"
-                        Click="SignUpButton_Click" >
-                    <Button.BorderBrush>
-                        <SolidColorBrush Color="#FF080807" Opacity="0.2"/>
-                    </Button.BorderBrush>
-                    <Button.Background>
-                        <SolidColorBrush Color="#FF4B514E" Opacity="0.885"/>
-                    </Button.Background>
-                    <TextBlock Text="Sign up" FontSize="30" FontWeight="Bold" FontFamily="Karantina" Foreground="White"/>
-                </Button>
-            </Border>
-        </Grid>
+        
+        <Frame x:Name="logFrame" Height="720" Width="945" Visibility="Visible" NavigationUIVisibility="Hidden" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-        <Grid x:Name="LoginObjectsGrid"  Visibility="Visible" Margin="0,0,-1,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="247*"/>
-                <ColumnDefinition Width="225*"/>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Background="#FF22231E">
-                <Border x:Name="Border2" CornerRadius="10"  HorizontalAlignment="Center" VerticalAlignment="Center"  Width="320" Height="400" >
-                    <Border.Background>
-                        <SolidColorBrush Color="#FFF3E6CE" Opacity="0.85"/>
-                    </Border.Background>
-                    <StackPanel>
-                        <TextBox x:Name="loginGridTextbox"
-                                 materialDesign:HintAssist.Hint="Login" SelectionBrush="White"
-                                 materialDesign:TextFieldAssist.HasClearButton="True" Margin="0 120 0 0" Width="200" CaretBrush="Black" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                        <PasswordBox x:Name="passwordGridTextbox"
-                                     materialDesign:HintAssist.HelperText="At least 8 characters"
-                                     materialDesign:HintAssist.Hint="Password"
-                                     materialDesign:TextFieldAssist.HasClearButton="True" Margin="0 30 0 0" Width="200" CaretBrush="Black" SelectionBrush="Black"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
-                                     />
-                        <Button Content="Login" materialDesign:ElevationAssist.Elevation="Dp16" Background="Black" BorderBrush="Black" Foreground="White" Width="220" Margin="0 40 0 0" Click="Button_Click_2"/>
-                        <Button
-                            Width="100"
-                            Click="ButtonBase_OnClick"
-                            Content="Back"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"
-                            Style="{StaticResource MaterialDesignFlatLightButton}"
-                            ToolTip="MaterialDesignFlatLightButton" Foreground="Black" Margin="0  78 0 0"
-                            />
-                    </StackPanel>
-                </Border>
-            </Border>
-            <Border Grid.Column="1" Background="White">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="This srm system used for work with big data." FontSize="40" TextWrapping="Wrap"  FontWeight="Bold" Margin="10 100 0 0" FontFamily="Frank Ruehl CLM BoldOblique"/>
-                    <TextBlock Text="You can edit tou customers, deals, profucts, leads, contacts and create new users! Ofcourse you can watch all analize graphics and tables! All save cloudy with my api system! System work only with good wifi data!" TextWrapping="Wrap" FontSize="28" FontWeight="Medium" Margin="10 30 0  0" FontFamily="Frank Ruehl CLM"/>
-                    <StackPanel Orientation="Horizontal">
-                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Content="{materialDesign:PackIcon Kind=Instagram}" materialDesign:ElevationAssist.Elevation="Dp16" Height="40" Width="50" Margin="100 220 0 0" Background="#FFF9F9F9" ToolTip="Follow me on Instagram" BorderBrush="{x:Null}" Click="Button_Click_3" />
-                        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Content="{materialDesign:PackIcon Kind=Github}"  materialDesign:ElevationAssist.Elevation="Dp16" Height="40" Width="50" Margin="100 220 0 0" Background="#FFF9F9F9" ToolTip="Follow me on Instagram" BorderBrush="{x:Null}" Click="Button_Click_4" />
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-        </Grid>
-        <Grid x:Name="SignupObjectsGrid" Visibility="Collapsed" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="247*"/>
-                <ColumnDefinition Width="225*"/>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Background="#FF22231E">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Foreground="Wheat" Text="You can sign up in system, and work with personal data." FontSize="40" TextWrapping="Wrap"  FontWeight="Bold" Margin="10 100 0 0" FontFamily="Frank Ruehl CLM BoldOblique"/>
-                    <TextBlock Foreground="Wheat" Text="The program processes the user's personal data, all rights and data are protected by a system security system designed specifically for working with a large amount of data!" TextWrapping="Wrap" FontSize="28" FontWeight="Medium" Margin="10 30 0  0" FontFamily="Frank Ruehl CLM"/>
-                </StackPanel>
-            </Border>
-            <Border Width="300" Height="600" CornerRadius="10"  Grid.Column="1">
-                <Border.BorderBrush>
-                    <SolidColorBrush Color="Black" Opacity="0.7"/>
-                </Border.BorderBrush>
-                <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.9"/>
-                </Border.Background>
-                <StackPanel>
-                    <Button
-                        Width="67"
-                        Click="ButtonBase_OnClick"
-                        Content="Back"
-                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                        Style="{StaticResource MaterialDesignFlatLightButton}" HorizontalAlignment="Left"
-                        ToolTip="MaterialDesignFlatLightButton" Foreground="Black" Margin="0 0 0 0" Height="22"
-                        />
-                    <materialDesign:Badged
-                        Badge="Select the file"
-                        BadgeColorZoneMode="Dark" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Center" >
-                        <Button Background="{x:Null}" Width="122" Height="118" BorderBrush="{x:Null}" Click="Button_Click_1">
-                            <Image x:Name="ProfileImageSource" Source="/Resources/Images/DefaultUserAvatar.png" Height="90" Width="96">
-                            </Image>
-                        </Button>
-
-                    </materialDesign:Badged>
-                    <TextBox x:Name="signupNameTextBox"
-                             materialDesign:HintAssist.Hint="Name"
-                             materialDesign:TextFieldAssist.HasClearButton="True" Margin="0 0 0 0" Width="200"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="Black" SelectionBrush="Black"/>
-                    <TextBox x:Name="signupSurnameTextBox"
-                             materialDesign:HintAssist.Hint="Surname"
-
-                             materialDesign:TextFieldAssist.HasClearButton="True" Margin="0 10 0 0" Width="200"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" SelectionBrush="Black" CaretBrush="#FF070804"/>
-                    <ComboBox x:Name="TypeofAccountCombobox"
-                              materialDesign:HintAssist.Hint="Type of account" Width="200" Height="34" Margin="0 20 0 0"
-                              >
-                        <ComboBoxItem
-                            Content="Customers Manager" />
-                        <ComboBoxItem
-                            Content="Deals Manager" />
-                        <ComboBoxItem
-                            Content="Products Manager" />
-                        <ComboBoxItem
-                            Content="Top Manager" />
-                    </ComboBox>
-                    <TextBox x:Name="signupNumberofphoneTextBox"
-                             materialDesign:TransitionAssist.DisableTransitions="True"
-                             MaxLength="10" Width="200" Margin="0 20 0 0" materialDesign:HintAssist.Hint="Number of phone"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="Black" SelectionBrush="Black"
-                             />
-                    <TextBox x:Name="emailTextBox"
-                             materialDesign:TransitionAssist.DisableTransitions="True"
-                             Width="200" Margin="0 20 0 0" materialDesign:HintAssist.Hint="Email"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="Black" SelectionBrush="Black"
-                             />
-                    <TextBox x:Name="signupLoginTextBox"
-                             VerticalAlignment="Center"
-                             materialDesign:HintAssist.Hint="Login"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" Margin="0 10 0 0" CaretBrush="Black" SelectionBrush="Black"
-                             />
-
-                    <PasswordBox x:Name="signupPasswordBox"
-                                 materialDesign:HintAssist.HelperText="Minimum of 8 char"
-                                 materialDesign:HintAssist.Hint="Password"
-                                 materialDesign:TextFieldAssist.HasClearButton="True" Width="200" Margin="0 20 0 0"
-                                 Style="{StaticResource MaterialDesignRevealPasswordBox}" CaretBrush="Black" SelectionBrush="Black" Height="34.0610677083333"
-                                 />
-                    <PasswordBox
-                        x:Name="PasswordBoxSignupCheker"
-                        materialDesign:HintAssist.Hint="Enter Password again"
-                        materialDesign:TextFieldAssist.HasClearButton="True" Width="200"  Margin="0 20 0 0"
-                        Style="{StaticResource MaterialDesignRevealPasswordBox}"  CaretBrush="Black" SelectionBrush="Black" Height="34.0610677083333"
-                        />
-                    <Button x:Name="SignupButton" Content="Sign up" Background="Black" BorderBrush="Black" Foreground="White" Width="220" Margin="0 20 0 0" Click="Button_Click"/>
-                </StackPanel>
-            </Border>
-        </Grid>
     </Grid>
 </Window>

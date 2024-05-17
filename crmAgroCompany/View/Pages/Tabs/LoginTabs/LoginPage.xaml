@@ -1,0 +1,62 @@
+﻿<Page x:Class="Client.View.Pages.Tabs.LoginTabs.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:Client.View.Pages.Tabs.LoginTabs"
+      xmlns:helpers="clr-namespace:Client.Helpers"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      Height="720" Width="945"
+      xmlns:viewModel="clr-namespace:Client.ViewModel"
+      >
+    <Page.DataContext>
+        <viewModel:LoginPageViewModel />
+    </Page.DataContext>
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="247*"/>
+            <ColumnDefinition Width="225*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="#FF22231E">
+            <Border x:Name="Border2" CornerRadius="10"  HorizontalAlignment="Center" VerticalAlignment="Center"  Width="320" Height="400" >
+                <Border.Background>
+                    <SolidColorBrush Color="#FFF3E6CE" Opacity="0.85"/>
+                </Border.Background>
+                <StackPanel>
+                    <TextBox x:Name="loginGridTextbox" Text="{Binding Login, UpdateSourceTrigger= PropertyChanged}"
+                             materialDesign:HintAssist.Hint="Login" SelectionBrush="White"
+                             materialDesign:TextFieldAssist.HasClearButton="True" Margin="0 120 0 0" Width="200" CaretBrush="Black" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                    <PasswordBox helpers:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 materialDesign:HintAssist.HelperText="At least 8 characters"
+                                 materialDesign:HintAssist.Hint="Password"
+                                 materialDesign:TextFieldAssist.HasClearButton="True" Margin="0 30 0 0" Width="200" CaretBrush="Black" SelectionBrush="Black"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                 />
+                    <Button Content="Login" Command="{Binding LoginCommand}" materialDesign:ElevationAssist.Elevation="Dp16" Background="Black" BorderBrush="Black" Foreground="White" Width="220" Margin="0 40 0 0" />
+                    <Button
+                        Width="100" Command="{Binding BackCommand}"
+                        Content="Back"
+                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"
+                        Style="{StaticResource MaterialDesignFlatLightButton}"
+                        ToolTip="MaterialDesignFlatLightButton" Foreground="Black" Margin="0  78 0 0"
+                        />
+                </StackPanel>
+            </Border>
+        </Border>
+        <Border Grid.Column="1" Background="White">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="This srm system used for work with big data." FontSize="40" TextWrapping="Wrap"  FontWeight="Bold" Margin="10 100 0 0" FontFamily="Frank Ruehl CLM BoldOblique"/>
+                <TextBlock Text="You can edit tou customers, deals, profucts, leads, contacts and create new users! Ofcourse you can watch all analize graphics and tables! All save cloudy with my api system! System work only with good wifi data!" TextWrapping="Wrap" FontSize="28" FontWeight="Medium" Margin="10 30 0  0" FontFamily="Frank Ruehl CLM"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button HorizontalAlignment="Left" VerticalAlignment="Top" Content="{materialDesign:PackIcon Kind=Instagram}" materialDesign:ElevationAssist.Elevation="Dp16" Height="40" Width="50" Margin="100 220 0 0" Background="#FFF9F9F9" ToolTip="Follow me on Instagram" BorderBrush="{x:Null}"  Command="{Binding OpenInstagramCommand}"/>
+                    <Button HorizontalAlignment="Left" VerticalAlignment="Top" Content="{materialDesign:PackIcon Kind=Github}"  materialDesign:ElevationAssist.Elevation="Dp16" Height="40" Width="50" Margin="100 220 0 0" Background="#FFF9F9F9" ToolTip="Follow me on GitHub" BorderBrush="{x:Null}" Command="{Binding OpenGitHubCommand}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

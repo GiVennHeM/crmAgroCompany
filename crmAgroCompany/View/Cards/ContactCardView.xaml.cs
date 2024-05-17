@@ -1,36 +1,20 @@
-﻿using Client.View.Pages;
-using Client.View.Pages.Tabs;
-using Client.ViewModels;
+﻿
+
+using Client.Models;
 using MaterialDesignThemes.Wpf;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Markup;
 
 namespace Client.View.Cards
 {
     /// <summary>
     /// Interaction logic for ContactCardView.xaml
     /// </summary>
-    public partial class ContactCardView : System.Windows.Controls.UserControl
+    public partial class ContactCardView : UserControl
     {
         BrushConverter converter = new BrushConverter();
         public ContactCardView()
         {
             InitializeComponent();
-            CheckLeadStatus();
             var contact = this.DataContext as Contact;
             if (contact != null)
             {
@@ -46,46 +30,6 @@ namespace Client.View.Cards
                 if (contact.LeadStatus == LeadStatus.Converted)
                 {
                     NextColoumnButton.Visibility = Visibility.Collapsed;
-                }
-            }
-        }
-        private void CheckLeadStatus()
-        {
-            var contact = this.DataContext as Contact;
-
-            if (contact != null)
-            {
-                if (contact.Lead)
-                {
-                    if (contact.LeadStatus == LeadStatus.New)
-                    {
-                        Brush? brush = converter.ConvertFromString("#93827F") as Brush;
-                        Card.Background = brush;
-                    }
-                    else if (contact.LeadStatus == LeadStatus.Contacted)
-                    {
-                        Brush brush = (Brush)converter.ConvertFromString("#F3F9D2");
-                        Card.Background = brush;
-                    }
-                    else if (contact.LeadStatus == LeadStatus.Qualified)
-                    {
-                        Brush brush = (Brush)converter.ConvertFromString("#BDC4A7");
-                        Card.Background = brush;
-                    }
-                    else if (contact.LeadStatus == LeadStatus.Lost)
-                    {
-                        Brush brush = (Brush)converter.ConvertFromString("#2F2F2F");
-                        Card.Background = brush;
-                    }
-                    else if (contact.LeadStatus == LeadStatus.Converted)
-                    {
-                        Brush brush = (Brush)converter.ConvertFromString("#92B4A7");
-                        Card.Background = brush;
-                    }
-                }
-                else
-                {
-                    Brush brush = (Brush)converter.ConvertFromString("#6B8F71");
                 }
             }
         }
@@ -179,5 +123,88 @@ namespace Client.View.Cards
             Contact = contact;
         }
     }
+    public class FromUserNameToColorConverter : MarkupExtension, IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return null;
+            }
 
+            string username = value.ToString();
+
+            // Hash the username using SHA-256 for a strong and consistent hash
+            byte[] hashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(username));
+            string hexHash = BitConverter.ToString(hashBytes).Replace("-", "");
+            string colorHash = hexHash.Substring(0, 6); // Extract first 6 characters
+
+
+            // Convert the hash to a complete hex color code (including #)
+            return $"#40{colorHash}";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (_converter == null)
+                _converter = new FromUserNameToColorConverter();
+            return _converter;
+        }
+
+        private static FromUserNameToColorConverter _converter = null;
+    }
+
+    public class ConvertorStatusToBackground : MarkupExtension, IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            Contact status = value as Contact;
+            if (status.LeadStatus == LeadStatus.New)
+            {
+                return $"#2F2F2F";
+            }
+            else if (status.LeadStatus == LeadStatus.Contacted)
+            {
+                return $"#93827F";
+            }
+            else if (status.LeadStatus == LeadStatus.Qualified)
+            {
+                return $"#F3F9D2";
+            }
+            else if (status.LeadStatus == LeadStatus.Lost)
+            {
+                return $"#BDC4A7";
+            }
+            else if (status.LeadStatus == LeadStatus.Converted)
+            {
+                return $"#92B4A7";
+            } if (status.Lead == false)
+            {
+                return $"#61726B";
+            }
+
+            return "White";
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (_converter == null)
+                _converter = new FromUserNameToColorConverter();
+            return _converter;
+        }
+        private static FromUserNameToColorConverter _converter = null;
+    }
 }

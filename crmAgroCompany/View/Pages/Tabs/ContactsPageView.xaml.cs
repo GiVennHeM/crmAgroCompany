@@ -76,9 +76,12 @@ namespace Client.View.Pages.Tabs
                 var description = addContactDescription.Text;
                 var lead = addContactlead.IsChecked ?? false;
 
-                if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) || string.IsNullOrEmpty(numberphone))
+                if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) || string.IsNullOrEmpty(numberphone) ||
+                string.IsNullOrEmpty(email) || string.IsNullOrEmpty(address) || string.IsNullOrEmpty(city) ||
+                string.IsNullOrEmpty(region) || string.IsNullOrEmpty(country) || string.IsNullOrEmpty(postalcode) ||
+                string.IsNullOrEmpty(ageText) || string.IsNullOrEmpty(description))
                 {
-                    MessageBox.Show("Please fill in all required fields (Name, surname, and number of phone).", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -237,11 +240,17 @@ namespace Client.View.Pages.Tabs
                         Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
 
                         NoLeadContacts = Contacts.Where(c => c.Lead == false).ToList();
+                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
                         NewLeadContacts = Contacts.Where(c => c.LeadStatus == LeadStatus.New).OrderBy(c => c.LeadStatus).ToList();
+                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
                         ContactedLeadContacts = Contacts.Where(c => c.LeadStatus == LeadStatus.Contacted).OrderBy(c => c.LeadStatus).ToList();
+                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
                         QualifiedLeadContacts = Contacts.Where(c => c.LeadStatus == LeadStatus.Qualified).OrderBy(c => c.LeadStatus).ToList();
+                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
                         LostLeadContacts = Contacts.Where(c => c.LeadStatus == LeadStatus.Lost).OrderBy(c => c.LeadStatus).ToList();
+                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
                         ConvertedLeadContacts = Contacts.Where(c => c.LeadStatus == LeadStatus.Converted).OrderBy(c => c.LeadStatus).ToList();
+                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
                         var filteredContacts = Contacts.Select(c => new
                         {
                             c.ContactId,
@@ -351,7 +360,7 @@ namespace Client.View.Pages.Tabs
         private List<Contact> _ConvertedLeadContacts;
         public List<Contact> ConvertedLeadContacts
         {
-            get { return _newLeadContacts; }
+            get { return _ConvertedLeadContacts; }
             set
             {
                 _ConvertedLeadContacts = value;

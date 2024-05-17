@@ -1,0 +1,26 @@
+﻿<Page x:Class="Client.View.Pages.Tabs.SettingsPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Client.View.Pages.Tabs"
+      xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="1240" Background="#FFC9C9C9"
+      Title="SettingsPageView">
+
+    <Grid Margin="6,8,0,0">
+        <Border Background="White" Width="1150" CornerRadius="10" Height="550">
+            <StackPanel Margin="20 20 20 20" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox x:Name="languageCombobox"
+                          materialDesign:HintAssist.Hint="Language"
+                          Style="{StaticResource MaterialDesignFilledComboBox}" FontSize="20" Width="200" Background="Wheat">
+                        <ComboBoxItem Content="English"/>
+                        <ComboBoxItem Content="Ukrainian"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
