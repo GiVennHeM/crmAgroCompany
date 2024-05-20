@@ -1,4 +1,6 @@
-﻿namespace Client.ViewModel
+﻿using Client.ViewModel;
+
+namespace Client.ViewModel
 {
     public class LoginWindowViewModel : ViewModelBase
     {

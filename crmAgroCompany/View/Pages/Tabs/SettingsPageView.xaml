@@ -12,7 +12,7 @@
     <Grid Margin="6,8,0,0">
         <Border Background="White" Width="1150" CornerRadius="10" Height="550">
             <StackPanel Margin="20 20 20 20" Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="20 20 0 0">
                     <ComboBox x:Name="languageCombobox"
                           materialDesign:HintAssist.Hint="Language"
                           Style="{StaticResource MaterialDesignFilledComboBox}" FontSize="20" Width="200" Background="Wheat">
@@ -20,6 +20,33 @@
                         <ComboBoxItem Content="Ukrainian"/>
                     </ComboBox>
                 </StackPanel>
+                <Border Width="500" Height="400" Margin="20 20 0 0" HorizontalAlignment="Left" Background="#F9F3E7" CornerRadius="20">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="LoginTextBox" materialDesign:HintAssist.Hint="Login" HorizontalAlignment="Left" Margin="10 10 0 0"
+                                 materialDesign:TextFieldAssist.HasClearButton="True" Width="209" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="#FF040402" />
+                            <TextBox x:Name="RoleTextBox" materialDesign:HintAssist.Hint="Role" HorizontalAlignment="Left" Margin="60 10 0 0"
+                                 materialDesign:TextFieldAssist.HasClearButton="True" Width="209" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="#FF040402" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical" Width="210" HorizontalAlignment="Left">
+                                <TextBox x:Name="NameTextBox" materialDesign:HintAssist.Hint="Name" HorizontalAlignment="Left" Margin="10 40 0 0"
+                                     materialDesign:TextFieldAssist.HasClearButton="True" Width="209" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="#FF040402" />
+                                <TextBox x:Name="SurnameTextBox" materialDesign:HintAssist.Hint="Surname" HorizontalAlignment="Left" Margin="10 10 0 0"
+                                     materialDesign:TextFieldAssist.HasClearButton="True" Width="209" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="#FF040402" />
+                                <TextBox x:Name="PhoneNumberTextBox" materialDesign:HintAssist.Hint="PhoneNumber" HorizontalAlignment="Left" Margin="10 10 0 0"
+                                     materialDesign:TextFieldAssist.HasClearButton="True" Width="209" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="#FF040402" />
+                                <TextBox x:Name="EmailTextBox" materialDesign:HintAssist.Hint="Email" HorizontalAlignment="Left" Margin="10 10 0 0"
+                                     materialDesign:TextFieldAssist.HasClearButton="True" Width="209" Style="{StaticResource MaterialDesignFilledTextBox}" TextWrapping="Wrap" CaretBrush="#FF040402" />
+                            </StackPanel>
+                            <Button Background="{x:Null}" Width="122" Height="118" BorderBrush="{x:Null}" Command="{Binding UploadImageCommand}" Margin="80 0 0 0" VerticalAlignment="Center">
+                                <Image x:Name="ProfileImageSource" Source="{Binding ProfileImageSource}" Height="90" Width="96">
+                                </Image>
+                            </Button>
+                        </StackPanel>
+                        <Button x:Name="EditSaveButton" Content="Edit" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Bottom" Margin="0 50 0 0" Width="120" Click="EditSaveButton_Click56" BorderBrush="{x:Null}" Background="#FF4B514E"/>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </Border>
     </Grid>

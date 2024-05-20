@@ -15,23 +15,6 @@ namespace Client.View.Cards
         public ContactCardView()
         {
             InitializeComponent();
-            var contact = this.DataContext as Contact;
-            if (contact != null)
-            {
-                if (contact.LeadStatus == LeadStatus.New)
-                {
-                    NextColoumnButton.Visibility = Visibility.Collapsed;
-                }
-                if (contact.Lead == false)
-                {
-                    BackColoumnButton.Visibility = Visibility.Collapsed;
-                    NextColoumnButton.Visibility = Visibility.Collapsed;
-                }
-                if (contact.LeadStatus == LeadStatus.Converted)
-                {
-                    NextColoumnButton.Visibility = Visibility.Collapsed;
-                }
-            }
         }
         public event EventHandler<ContactEventArgs> ContactSelected;
 
@@ -46,56 +29,6 @@ namespace Client.View.Cards
             if (contact != null)
             {
                 OnContactSelected(contact);
-            }
-        }
-
-        private void NextColoumnButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            var contact = this.DataContext as Contact;
-            if (contact != null)
-            {
-                switch (contact.LeadStatus)
-                {
-                    case LeadStatus.New:
-                        contact.LeadStatus = LeadStatus.Contacted;
-                        break;
-                    case LeadStatus.Contacted:
-                        contact.LeadStatus = LeadStatus.Qualified;
-                        break;
-                    case LeadStatus.Qualified:
-                        contact.LeadStatus = LeadStatus.Converted;
-                        break;
-                    case LeadStatus.Converted:
-                        contact.LeadStatus = LeadStatus.Lost;
-                        break;
-                }
-
-            }
-        }
-
-        private void BackColoumnButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            var contact = this.DataContext as Contact;
-            if (contact != null)
-            {
-                switch (contact.LeadStatus)
-                {
-                    case LeadStatus.Contacted:
-                        contact.LeadStatus = LeadStatus.New;
-                        break;
-                    case LeadStatus.Qualified:
-                        contact.LeadStatus = LeadStatus.Contacted;
-                        break;
-                    case LeadStatus.Converted:
-                        contact.LeadStatus = LeadStatus.Qualified;
-                        break;
-                    case LeadStatus.Lost:
-                        contact.LeadStatus = LeadStatus.Converted;
-                        break;
-                }
-
             }
         }
     }
@@ -163,36 +96,35 @@ namespace Client.View.Cards
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
+            if (value == null || !(value is Contact))
             {
                 return null;
             }
-
-            Contact status = value as Contact;
-            if (status.LeadStatus == LeadStatus.New)
+            Contact contact = (Contact)value;
+            if (contact.LeadStatus == LeadStatus.New)
             {
-                return $"#2F2F2F";
+                return $"#FFF275";
             }
-            else if (status.LeadStatus == LeadStatus.Contacted)
+            else if (contact.LeadStatus == LeadStatus.Contacted)
             {
-                return $"#93827F";
+                return $"#FF8C42";
             }
-            else if (status.LeadStatus == LeadStatus.Qualified)
+            else if (contact.LeadStatus == LeadStatus.Qualified)
             {
-                return $"#F3F9D2";
+                return $"#A23E48";
             }
-            else if (status.LeadStatus == LeadStatus.Lost)
+            else if (contact.LeadStatus == LeadStatus.Lost)
             {
-                return $"#BDC4A7";
+                return $"#FF3C38";
             }
-            else if (status.LeadStatus == LeadStatus.Converted)
+            else if (contact.LeadStatus == LeadStatus.Converted)
             {
-                return $"#92B4A7";
-            } if (status.Lead == false)
-            {
-                return $"#61726B";
+                return $"#FFBF5C";
             }
-
+            if (contact.Lead == false)
+            {
+                return $"#6699CC";
+            }
             return "White";
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -202,9 +134,10 @@ namespace Client.View.Cards
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_converter == null)
-                _converter = new FromUserNameToColorConverter();
+                _converter = new ConvertorStatusToBackground();
             return _converter;
         }
-        private static FromUserNameToColorConverter _converter = null;
+        private static ConvertorStatusToBackground _converter = null;
     }
+    
 }

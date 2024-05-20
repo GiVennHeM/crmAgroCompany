@@ -54,11 +54,11 @@
                         <ListBox Margin="10 0 0 0" Background="#131F23"
                                  x:Name="MyRadioButtonGroupChoiceChipPrimaryOutline"
                                  Style="{StaticResource MaterialDesignChoiceChipListBox}" Height="40" Width="210"
-                                 >
+                                 SelectionChanged="RadioButtonGroupChoiceChipPrimaryOutline_SelectionChanged1" >
                             <ListBoxItem
-                                Content="All contacts" IsSelected="True" />
+                                x:Name="allContacts" Content="All contacts" IsSelected="True" />
                             <ListBoxItem
-                                Content="My contacts"
+                                x:Name="myContacts" Content="My contacts"
                                 />
                         </ListBox>
                     </StackPanel>
@@ -189,7 +189,7 @@
                         </StackPanel>
                         <StackPanel Margin="10 0 0 0" Orientation="Vertical">
                             <TextBlock Margin="10 0 0 0" Text="Contacted" FontWeight="Bold" FontSize="24" FontFamily="Microsoft YaHei "/>
-                            <ListView  x:Name="ContactedLeadContactCard" ItemsSource="{Binding ContactedLeadContacts}" Margin="0,0,0,0" Width="180" Height="354" BorderBrush="#FF8D4747" Background="#FF955F5F">
+                            <ListView  x:Name="ContactedLeadContactCard" ItemsSource="{Binding ContactedLeadContacts}" Margin="0,0,0,0" Width="180" Height="354">
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Vertical" />
@@ -233,8 +233,8 @@
                             </ListView>
                         </StackPanel>
                         <StackPanel Margin="10 0 0 0" Orientation="Vertical">
-                            <TextBlock Margin="10 0 0 0" Text="Coverted" FontWeight="Bold" FontSize="24" FontFamily="Microsoft YaHei "/>
-                            <ListView  x:Name="ConvertedLeadContactCard" ItemsSource="{Binding ConvertedLeadContacts}" Margin="0,0,0,0" Width="180" Height="354" BorderBrush="#FF8D4747" Background="#FF955F5F">
+                            <TextBlock Margin="10 0 0 0" Text="Converted" FontWeight="Bold" FontSize="24" FontFamily="Microsoft YaHei "/>
+                            <ListView  x:Name="ConvertedLeadContactCard" ItemsSource="{Binding ConvertedLeadContacts}" Margin="0,0,0,0" Width="180" Height="354" Visibility="Visible" BorderBrush="#FF8D4747" Background="{x:Null}">
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Vertical" />
@@ -253,6 +253,6 @@
             </Grid>
         </Border>
         <Frame x:Name="InfoContact" NavigationUIVisibility="Hidden"
-               Height="550" Width="970"/>
+               Height="550" Width="970" Margin="120,128,156,-49" />
     </Grid>
 </Page>

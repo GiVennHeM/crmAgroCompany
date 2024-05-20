@@ -52,6 +52,10 @@ namespace Client.View.Pages.Tabs
 
             NotLeadContactCard.DataContext = this;
             NewLeadContactCard.DataContext = this;
+            ContactedLeadContactCard.DataContext = this;
+            QualifiedLeadContactCard.DataContext = this;
+            LostLeadContactCard.DataContext = this;
+            ConvertedLeadContactCard.DataContext = this;
         }
         private void OnContactSelected(object sender, ContactEventArgs e)
         {
@@ -232,26 +236,21 @@ namespace Client.View.Pages.Tabs
             {
                 using (var client = new HttpClient())
                 {
-                    var response = await client.GetAsync("https://localhost:7280/api/Contacts");
+                    var response = await client.GetAsync("https://localhost:7280/api/FilteredContacts");
 
                     if (response.IsSuccessStatusCode)
                     {
                         var json = await response.Content.ReadAsStringAsync();
-                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
+                        var contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
 
-                        NoLeadContacts = Contacts.Where(c => c.Lead == false).ToList();
-                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
-                        NewLeadContacts = Contacts.Where(c => c.LeadStatus == LeadStatus.New).OrderBy(c => c.LeadStatus).ToList();
-                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
-                        ContactedLeadContacts = Contacts.Where(c => c.LeadStatus == LeadStatus.Contacted).OrderBy(c => c.LeadStatus).ToList();
-                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
-                        QualifiedLeadContacts = Contacts.Where(c => c.LeadStatus == LeadStatus.Qualified).OrderBy(c => c.LeadStatus).ToList();
-                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
-                        LostLeadContacts = Contacts.Where(c => c.LeadStatus == LeadStatus.Lost).OrderBy(c => c.LeadStatus).ToList();
-                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
-                        ConvertedLeadContacts = Contacts.Where(c => c.LeadStatus == LeadStatus.Converted).OrderBy(c => c.LeadStatus).ToList();
-                        Contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
-                        var filteredContacts = Contacts.Select(c => new
+                        NoLeadContacts = contacts.Where(c => c.Lead == false).ToList();
+                        NewLeadContacts = contacts.Where(c => c.LeadStatus == LeadStatus.New).OrderBy(c => c.LeadStatus).ToList();
+                        ContactedLeadContacts = contacts.Where(c => c.LeadStatus == LeadStatus.Contacted).OrderBy(c => c.LeadStatus).ToList();
+                        QualifiedLeadContacts = contacts.Where(c => c.LeadStatus == LeadStatus.Qualified).OrderBy(c => c.LeadStatus).ToList();
+                        LostLeadContacts = contacts.Where(c => c.LeadStatus == LeadStatus.Lost).OrderBy(c => c.LeadStatus).ToList();
+                        ConvertedLeadContacts = contacts.Where(c => c.LeadStatus == LeadStatus.Converted).OrderBy(c => c.LeadStatus).ToList();
+
+                        var filteredContacts = contacts.Select(c => new
                         {
                             c.ContactId,
                             c.Name,
@@ -267,19 +266,21 @@ namespace Client.View.Pages.Tabs
                             c.CreatedDate,
                             Creator = c.CreatorUserId
                         }).ToList();
+
                         contactsDataGrid.ItemsSource = filteredContacts;
                     }
                     else
                     {
-                        MessageBox.Show("Failed to retrieve contact data. Status code: " + response.StatusCode);
+                        MessageBox.Show("Failed to retrieve contact data. Status code: " + response.StatusCode, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while loading contacts: " + ex.Message);
+                MessageBox.Show("An error occurred while loading contacts: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -330,7 +331,7 @@ namespace Client.View.Pages.Tabs
         private List<Contact> _ContactedLeadContacts;
         public List<Contact> ContactedLeadContacts
         {
-            get { return _ContactedLeadContacts; }
+            get => _ContactedLeadContacts;
             set
             {
                 _ContactedLeadContacts = value;
@@ -367,5 +368,73 @@ namespace Client.View.Pages.Tabs
                 OnPropertyChanged(nameof(ConvertedLeadContacts));
             }
         }
+        private void RadioButtonGroupChoiceChipPrimaryOutline_SelectionChanged1(object sender, SelectionChangedEventArgs e)
+        {
+            if (allContacts.IsSelected)
+            {
+                if (_user != null)
+                {
+                    LoadContacts();
+                }
+            }
+            else if (myContacts.IsSelected)
+            {
+                LoadUserContacts(_user.UserId);
+            }
+        }
+
+        private async void LoadUserContacts(int userId)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.GetAsync($"https://localhost:7280/api/MyContacts/{userId}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = await response.Content.ReadAsStringAsync();
+                        var contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
+
+                        Contacts = contacts;
+
+                        NoLeadContacts = contacts.Where(c => c.Lead == false).ToList();
+                        NewLeadContacts = contacts.Where(c => c.LeadStatus == LeadStatus.New).OrderBy(c => c.LeadStatus).ToList();
+                        ContactedLeadContacts = contacts.Where(c => c.LeadStatus == LeadStatus.Contacted).OrderBy(c => c.LeadStatus).ToList();
+                        QualifiedLeadContacts = contacts.Where(c => c.LeadStatus == LeadStatus.Qualified).OrderBy(c => c.LeadStatus).ToList();
+                        LostLeadContacts = contacts.Where(c => c.LeadStatus == LeadStatus.Lost).OrderBy(c => c.LeadStatus).ToList();
+                        ConvertedLeadContacts = contacts.Where(c => c.LeadStatus == LeadStatus.Converted).OrderBy(c => c.LeadStatus).ToList();
+
+                        var filteredContacts = contacts.Select(c => new
+                        {
+                            c.ContactId,
+                            c.Name,
+                            c.Surname,
+                            c.PhoneNumber,
+                            c.Email,
+                            c.Address,
+                            c.City,
+                            c.Region,
+                            c.PostalCode,
+                            c.Country,
+                            c.Age,
+                            c.CreatedDate,
+                            Creator = c.CreatorUserId
+                        }).ToList();
+
+                        contactsDataGrid.ItemsSource = filteredContacts;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to retrieve user contacts. Status code: " + response.StatusCode, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while loading user contacts: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
 }

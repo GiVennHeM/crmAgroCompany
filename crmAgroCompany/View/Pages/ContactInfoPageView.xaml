@@ -57,10 +57,6 @@
                 <ComboBoxItem Content="High"/>
             </ComboBox>
             <ComboBox x:Name="ContactLeadStatus" materialDesign:HintAssist.Hint="Status" HorizontalAlignment="Left" IsEnabled="False" FontSize="20" FontWeight="Bold"  Width="120" Margin="10 30 0 0">
-                <ComboBoxItem Content="Contacted"/>
-                <ComboBoxItem Content="Qualified"/>
-                <ComboBoxItem Content="Lost"/>
-                <ComboBoxItem Content="Converted"/>
             </ComboBox>
             <DatePicker  x:Name="LastContactDate"  Width="192"  Margin="10 30 0 0" HorizontalAlignment="Left" IsEnabled="False" materialDesign:HintAssist.Hint="Last Contact" FontSize="20" FontWeight="Bold" />
             <ComboBox x:Name="LastContactBy" materialDesign:HintAssist.Hint="Last contact By" HorizontalAlignment="Left" IsEnabled="False"  FontSize="20" FontWeight="Bold"  Width="195" Margin="10 30 0 0">

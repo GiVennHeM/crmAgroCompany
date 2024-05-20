@@ -8,7 +8,7 @@ namespace Client.View.Windows
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
 
         private User _user;
@@ -60,37 +60,27 @@ namespace Client.View.Windows
                 {
                     MessageBox.Show("Image path not found in claims.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-
-                meButton.Content = $"Helo, {user.UserName}";
+                meButton.Content = $"Hello, {user.UserName}";
             }
             else
             {
                 MessageBox.Show("Failed to use token.");
             }
-
+            SearchContactCard.DataContext = this;
         }
-
         private async void StaffButton_Click(object sender, RoutedEventArgs e)
         {
             mainFrame.Navigate(new StaffPageView());
 
         }
-
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
             mainFrame.Navigate(new HomePageView());
         }
-
-
-
         private void DealButton_Click(object sender, RoutedEventArgs e)
         {
             mainFrame.Navigate(new DealsPageView());
         }
-
-
-
         private void ProductsButton_Click(object sender, RoutedEventArgs e)
         {
             mainFrame.Navigate(new ProductsPageView());
@@ -141,24 +131,65 @@ namespace Client.View.Windows
         {
             mainFrame.Navigate(new ContactsPageView(_token));
         }
-
-
-
-
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
             this.Close();
         }
-
-
-
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            mainFrame.Navigate(new SettingsPageView());
+            mainFrame.Navigate(new SettingsPageView(_token));
+        }
 
+        private void meButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainFrame.Navigate(new SettingsPageView(_token));
+        }
 
+        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Search.TextChanged += Search_TextChanged1;
+        }
+
+        private async void Search_TextChanged1(object sender, TextChangedEventArgs e)
+        {
+            var name = Search.Text;
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.GetAsync($"https://localhost:7280/api/SearchContacts?Name={name}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = await response.Content.ReadAsStringAsync();
+                        var contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
+                            SearchedContacts = contacts;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while loading user contacts: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+        private List<Contact> _SearchedContacts;
+        public List<Contact> SearchedContacts
+        {
+            get => _SearchedContacts;
+            set
+            {
+                _SearchedContacts = value;
+                OnPropertyChanged(nameof(SearchedContacts));
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

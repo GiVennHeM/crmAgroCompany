@@ -20,7 +20,10 @@ namespace Client.View.Pages
             _selectedContact = selectedContact;
             LoadContactInfo(_selectedContact);
 
-
+            ContactLeadStatus.Items.Add(LeadStatus.Contacted);
+            ContactLeadStatus.Items.Add(LeadStatus.Qualified);
+            ContactLeadStatus.Items.Add(LeadStatus.Converted);
+            ContactLeadStatus.Items.Add(LeadStatus.Lost);
         }
         public void LoadContactInfo(Contact contact)
         {
@@ -42,13 +45,12 @@ namespace Client.View.Pages
             if (contact.Lead)
             {
                 Lead.IsChecked = true;
-                ContactLeadSource.SelectedItem = contact.LeadSource?.ToString();
-                ContactLeadPriority.SelectedItem = contact.Priority?.ToString();
-                ContactLeadStatus.SelectedItem = contact.LeadStatus?.ToString();
+                ContactLeadSource.Text = contact.LeadSource?.ToString();
+                ContactLeadPriority.Text = contact.Priority?.ToString();
+                ContactLeadStatus.SelectedItem = contact.LeadStatus;
                 LastContactDate.SelectedDate = contact.LastContactDate;
                 LastContactBy.Text = contact.LastContactedBy;
             }
-
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -104,7 +106,7 @@ namespace Client.View.Pages
                 var postalCode = PostalCode.Text;
                 var country = Country.Text;
                 var description = addContactDescription.Text;
-                var lead = false;
+                var lead = Lead;
 
 
                 int contactId = _selectedContact.ContactId;
@@ -121,32 +123,33 @@ namespace Client.View.Pages
                 _selectedContact.Age = Convert.ToInt32(age);
                 _selectedContact.Description = description;
                 _selectedContact.CreatedDate = DateTime.Now;
-                _selectedContact.Lead = lead;
+                if (Lead.IsChecked == false)
+                    _selectedContact.Lead = false;
+                else _selectedContact.Lead = true;
 
-                if (lead)
+                if (_selectedContact.Lead)
                 {
-                        switch (ContactLeadSource.SelectedIndex)
+                    if (ContactLeadStatus.SelectedIndex >= 0)
+                    {
+                        switch (ContactLeadStatus.SelectedItem)
                         {
-                            case 0:
-                                _selectedContact.LeadStatus = LeadStatus.New;
-                                break;
-                            case 1:
-                                _selectedContact.LeadStatus = LeadStatus.Contacted;
-                                break;
-                            case 2:
+                            case LeadStatus.Qualified:
                                 _selectedContact.LeadStatus = LeadStatus.Qualified;
                                 break;
-                            case 3:
+                            case LeadStatus.Lost:
                                 _selectedContact.LeadStatus = LeadStatus.Lost;
                                 break;
-                            case 4:
+                            case LeadStatus.Converted:
                                 _selectedContact.LeadStatus = LeadStatus.Converted;
+                                break;
+                            case LeadStatus.Contacted:
+                                _selectedContact.LeadStatus = LeadStatus.Contacted;
                                 break;
                             default:
                                 _selectedContact.LeadStatus = LeadStatus.New;
                                 break;
                         }
-                    
+                    }
                     _selectedContact.LastContactDate = LastContactDate.SelectedDate;
 
                     if (ContactLeadSource.SelectedIndex >= 0)
